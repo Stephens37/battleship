@@ -1,9 +1,21 @@
-function shipProperties (shipLength, timesHit, sunk) {
-  shipLength = shipLength
-  timesHit = timesHit
-  sunk = sunk
-
-  return { shipLength, timesHit, sunk }
+function shipProperties (shipLength, timesHit) {
+  return {
+    shipLength,
+    timesHit,
+    sunk,
+    hit: function () {
+      timesHit += 1
+      return timesHit
+    },
+    isSunk: function () {
+      if (shipLength === timesHit) {
+        sunk = true
+        return sunk
+      }
+    }
+  }
 }
 
-module.exports = shipProperties(5, 0, false)
+module.exports = shipProperties(5, 5)
+module.exports = shipProperties.hit()
+module.exports = shipProperties.isSunk()
