@@ -1,7 +1,15 @@
-const shipProperties = require("./ship");
+const ship = require("./ship")
 
 describe('ship attributes', () => {
-  test('length, times hit, sunk', () => {
-    expect(shipProperties).toEqual({shipLength: 5, timesHit: 0, sunk: false })
+  test('length and times hit', () => {
+    expect(ship.shipAttributes()).toEqual({ shipLength: 5, timesHit: 4, sunk: false })
+  })
+
+  test('hit', () => {
+    expect(ship.hit()).toEqual(5)
+  })
+
+  test('sunk', () => {
+    expect(ship.isSunk()).toBe(true)
   })
 })
