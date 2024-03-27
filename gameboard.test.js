@@ -19,9 +19,12 @@ const gameboard = require('./gameboard')
 
 describe('gameboard functionality', () => {
   test('place ships', () => {
-    expect(gameboard.placement()).toBe({ 1, 1 }, { 5, 1 })
+    expect(gameboard.placement()).toBe({1, 1})
   }
   )
+  test('placement error', () => {
+    expect(gameboard.placement).toThrow()
+  })
   test('receive attack', () => {
     expect(gameboard.receiveAttack()).toBe(true)
   })
