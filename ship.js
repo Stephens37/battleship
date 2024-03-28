@@ -16,7 +16,7 @@ function ship (shipLength, timesHit, sunk) {
   }
 }
 
-module.exports = ship(5, 4, false)
+module.exports = ship()
 
 /*
 
