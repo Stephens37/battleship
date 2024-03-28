@@ -19,19 +19,19 @@ const gameboard = require('./gameboard')
 
 describe('gameboard functionality', () => {
   test('place ships', () => {
-    expect(gameboard.placement()).toBe({1, 1})
+    expect(gameboard.placement()).toBe([{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }])
   }
   )
   test('placement error', () => {
     expect(gameboard.placement).toThrow()
   })
   test('receive attack', () => {
-    expect(gameboard.receiveAttack()).toBe(true)
+    expect(gameboard.receiveAttack()).toBe(shipType.hit())
+  })
+  test('sunk ship', () => {
+    expect(gameboard.receiveAttack()).toBe(shipType.sunk())
   })
   test('missed attack', () => {
-    expect(gameboard.receiveAttack()).toBe(false)
-  })
-  test('game over', () => {
-    expect(gameboard.gameOver().toBe(false))
+    expect(gameboard.receiveAttack()).toBe(missed)
   })
 })
