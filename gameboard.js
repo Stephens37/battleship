@@ -45,7 +45,7 @@ function gameboard (shipType, coordinates, xCor, yCor, corArr) {
     xCor: xCor,
     yCor: yCor,
     corArr: corArr,
-    placement: function (coordinates) {
+    placement: function () {
       /*
       if the x coordinate + ship.length is greater than 10
       throw error
@@ -63,7 +63,7 @@ function gameboard (shipType, coordinates, xCor, yCor, corArr) {
       for (let i = 1; i < shipType.shipLength; i++) {
         coordinates = { xCor: xCor + i, yCor }
         corArr = []
-        corArr.push()
+        corArr.push(coordinates)
       }
       return corArr
     },
@@ -90,3 +90,5 @@ function gameboard (shipType, coordinates, xCor, yCor, corArr) {
     }
   }
 }
+
+module.exports = gameboard

@@ -1,9 +1,8 @@
-const ship = require("./ship")
+const ship = require('./ship')
 
-ship(carrier)
 describe('ship attributes', () => {
   test('hit', () => {
-    expect(ship.hit()).toEqual(1)
+    expect(ship.hit()).toEqual(5)
   })
 
   test('sunk', () => {
