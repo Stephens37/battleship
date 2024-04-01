@@ -52,7 +52,7 @@ function gameboard (shipType, coordinates, xCor, yCor, corArr) {
       else return
       */
       if (xCor + ship.length > 10) {
-        throw new Error('Error: ship will not fit where you wish to place it.');
+        throw new Error('Error: ship will not fit where you wish to place it.')
       }
       try {
         corArr.push(coordinates)

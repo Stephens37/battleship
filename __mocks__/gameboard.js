@@ -1,4 +1,4 @@
-const { timesHit, sunk } = require("../ship")
+const { timesHit, sunk, shipLength } = require("../ship")
 
 const boardArr = Array.from({ length: 10 }, () => Array(10).fill(0))
 
@@ -23,21 +23,15 @@ function gameboard (shipType, xCor, yCor) {
       throw error
       else return
       */
-      
-      if (xCor + carrier.shipLength > 10) {
-        throw new Error('Error: ship will not fit where you wish to place it.')
-      }
-      try {
-        corArr.push(coordinates)
-      } catch (e) {
-        console.error(e)
-      }
 
-      for (let i = 1; i < carrier.shipLength; i++) {
-        coordinates = { xCor: xCor + i, yCor }
-        corArr.push(coordinates)
+      if (coordinates.xCor + carrier.shipLength > 10) {
+        throw new Error('Error: ship will not fit where you wish to place it.')
+      } else {
+        for (let i = 0; i < carrier.shipLength; i++) {
+          corArr.push({ xCor: coordinates.xCor + i, yCor: coordinates.yCor })
+        }
+        return corArr
       }
-      return corArr
     },
     receiveAttack: function (coordinates) {
       /*
@@ -48,6 +42,10 @@ function gameboard (shipType, xCor, yCor) {
       for (let i = 0; i < corArr.length; i++) {
         if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates, carrier.timesHit, carrier.sunk)) {
           carrier.timesHit = carrier.timesHit + 1
+          if (carrier.timesHit === carrier.shipLength) {
+            sunkArr.push(carrier)
+            return true
+          }
           return carrier.timesHit
         }
       }
