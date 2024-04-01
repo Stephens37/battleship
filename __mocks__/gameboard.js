@@ -1,3 +1,5 @@
+const { timesHit, sunk } = require("../ship")
+
 const boardArr = Array.from({ length: 10 }, () => Array(10).fill(0))
 
 let sunkArr = []
@@ -21,8 +23,9 @@ function gameboard (shipType, xCor, yCor) {
       throw error
       else return
       */
-      if (xCor + shipLength > 10) {
-        throw new Error('Error: ship will not fit where you wish to place it.');
+      
+      if (xCor + carrier.shipLength > 10) {
+        throw new Error('Error: ship will not fit where you wish to place it.')
       }
       try {
         corArr.push(coordinates)
@@ -30,7 +33,7 @@ function gameboard (shipType, xCor, yCor) {
         console.error(e)
       }
 
-      for (let i = 1; i < shipLength; i++) {
+      for (let i = 1; i < carrier.shipLength; i++) {
         coordinates = { xCor: xCor + i, yCor }
         corArr.push(coordinates)
       }
@@ -43,21 +46,18 @@ function gameboard (shipType, xCor, yCor) {
       else the coordinates will be returned as missed
       */
       for (let i = 0; i < corArr.length; i++) {
-        if (corArr[i][0] === xCor && corArr[i][1] === yCor) {
+        if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates, carrier.timesHit, carrier.sunk)) {
           carrier.timesHit = carrier.timesHit + 1
-        } else if (carrier.timesHit === carrier.shipLength) {
-          carrier.sunk = true
-          sunkArr.push(carrier)
-          if (sunkArr.length === 5) {
-            return gameOver
-          }
-        } else {
-          missed.push(coordinates)
-          return missed
+          return carrier.timesHit
         }
       }
+
+      missed.push(coordinates)
+      return { missed }
     }
   }
 }
 
-module.exports = gameboard(carrier, { xCor: 1, yCor: 1 }, 1, 1, [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }])
+//module.exports = gameboard(carrier, { xCor: 1, yCor: 1 }, 1, 1, [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }])
+
+module.exports = gameboard

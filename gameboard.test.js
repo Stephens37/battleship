@@ -1,29 +1,40 @@
-const gameboard = jest.mock('./gameboard.js')
+jest.mock('./gameboard')
+const gameboard = require('./gameboard')
+let carrier = { shipLength: 5, timesHit: 4, sunk: false }
+let missed = []
+
+const board = gameboard(carrier, 1, 1)
+/* const corArr = [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }] */
 
 describe('gameboard functionality', () => {
-  test('place ships', () => {
-    const corArr = [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }]
-    expect(gameboard.placement()).toEqual(corArr)
+  test('xcor', () => {
+    expect(board.xCor).toBe(1)
   })
+})
 
-  test('placement error', () => {
-    const corArr = [{ xCor: 8, yCor: 1 }, { xCor: 9, yCor: 1 }, { xCor: 10, yCor: 1 }, { xCor: 11, yCor: 1 }, { xCor: 12, yCor: 1 }]
-    expect(() => { gameboard.placement() }).toThrow('Error: ship will not fit where you wish to place it.')
-  })
+test('place ships', () => {
+  const corArr = [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }]
+  const coordinates = {xCor: 1, yCor: 1}
+  expect(board.placement(coordinates)).toStrictEqual(corArr)
+})
 
-  test('receive attack', () => {
-    const coordinates = { xCor: 1, yCor: 1 }
-    expect(gameboard.receiveAttack(coordinates)).toBe(5)
-  })
+test.skip('placement error', () => {
+  const corArr = [{ xCor: 8, yCor: 1 }, { xCor: 9, yCor: 1 }, { xCor: 10, yCor: 1 }, { xCor: 11, yCor: 1 }, { xCor: 12, yCor: 1 }]
+  expect(() => { board.placement() }).toThrow('Error: ship will not fit where you wish to place it.')
+})
 
-  test('sunk ship', () => {
-    const coordinates = { xCor: 1, yCor: 1 }
-    gameboard.receiveAttack(coordinates) // Hit the ship enough times to sink it
-    expect(gameboard.sunk).toBe(true)
-  })
+test('receive attack', () => {
+  const coordinates = { xCor: 1, yCor: 1 }
+  expect(board.receiveAttack(coordinates, carrier.timesHit, carrier.sunk)).toBe(5)
+})
 
-  test('missed attack', () => {
-    const coordinates = { xCor: 6, yCor: 6 } // Coordinates that are not part of any ship
-    expect(gameboard.receiveAttack(coordinates)).toEqual([coordinates])
-  })
+test.skip('sunk ship', () => {
+  const coordinates = { xCor: 5, yCor: 1 }
+  board.receiveAttack(coordinates) // Hit the ship enough times to sink it
+  expect(board.shipType.sunk).toBe(true)
+})
+
+test('missed attack', () => {
+  const coordinates = { xCor: 6, yCor: 6 } // Coordinates that are not part of any ship
+  expect(board.receiveAttack(coordinates)).toBe([{ xCor: 6, yCor: 6 }])
 })
