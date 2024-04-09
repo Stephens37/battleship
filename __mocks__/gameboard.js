@@ -2,10 +2,10 @@ const { timesHit, sunk, shipLength } = require("../ship")
 
 const boardArr = Array.from({ length: 10 }, () => Array(10).fill(0))
 
-let sunkArr = []
+let sunkArr = ['s', 'u', 'n']
 const gameOver = 'Game Over'
 
-let carrier = { shipLength: 5, timesHit: 4, sunk: false }
+let carrier = { shipLength: 5, timesHit: 3, sunk: false }
 let missed = []
 
 function gameboard (shipType, xCor, yCor) {
@@ -42,9 +42,14 @@ function gameboard (shipType, xCor, yCor) {
       for (let i = 0; i < corArr.length; i++) {
         if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates, carrier.timesHit, carrier.sunk)) {
           carrier.timesHit = carrier.timesHit + 1
+          let carrierHit = carrier.timesHit
           if (carrier.timesHit === carrier.shipLength) {
             sunkArr.push(carrier)
-            return true
+            if (sunkArr.length === 5) {
+              return gameOver
+            }
+            carrier.sunk = true
+            return carrier.sunk
           }
           return carrier.timesHit
         }
@@ -55,7 +60,5 @@ function gameboard (shipType, xCor, yCor) {
     }
   }
 }
-
-//module.exports = gameboard(carrier, { xCor: 1, yCor: 1 }, 1, 1, [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }])
 
 module.exports = gameboard
