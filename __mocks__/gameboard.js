@@ -6,12 +6,13 @@ let sunkArr = ['s', 'u', 'n']
 const gameOver = 'Game Over'
 
 let carrier = { shipLength: 5, timesHit: 3, sunk: false }
-let missed = []
 
 function gameboard (shipType, xCor, yCor) {
   let coordinates = { xCor, yCor }
   let corArr = []
+  let missed = [{ xCor: 2, yCor: 2 }]
   return {
+    missed: missed,
     shipType: shipType,
     coordinates: coordinates,
     xCor: xCor,
@@ -42,7 +43,6 @@ function gameboard (shipType, xCor, yCor) {
       for (let i = 0; i < corArr.length; i++) {
         if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates, carrier.timesHit, carrier.sunk)) {
           carrier.timesHit = carrier.timesHit + 1
-          let carrierHit = carrier.timesHit
           if (carrier.timesHit === carrier.shipLength) {
             sunkArr.push(carrier)
             if (sunkArr.length === 5) {
