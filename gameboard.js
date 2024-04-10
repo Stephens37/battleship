@@ -21,72 +21,69 @@ ship.sunk() is called
 that ship is displayed in the sunk category
 */
 
-/*
+const { timesHit, sunk, shipLength } = require("../ship")
 
-*/
-const ship = require('./ship')
 const boardArr = Array.from({ length: 10 }, () => Array(10).fill(0))
 
 let sunkArr = []
 const gameOver = 'Game Over'
 
-let carrier = ship(5, 0, false)
-let battleship = ship(4, 0, false)
-let cruiser = ship(3, 0, false)
-let submarine = ship(3, 0, false)
-let destroyer = ship(2, 0, false)
+let destroyer = { shipLength: 2, timesHit: 0, sunk: false }
+let submarine = { shipLength: 3, timesHit: 0, sunk: false }
+let cruiser = { shipLength: 3, timesHit: 0, sunk: false }
+let battleship = { shipLength: 4, timesHit: 0, sunk: false }
+let carrier = { shipLength: 5, timesHit: 0, sunk: false }
+
 let missed = []
 
-function gameboard (shipType, coordinates, xCor, yCor, corArr) {
-  coordinates = { xCor, yCor }
+function gameboard (shipType, xCor, yCor) {
+  let coordinates = { xCor, yCor }
+  let corArr = []
   return {
     shipType: shipType,
     coordinates: coordinates,
     xCor: xCor,
     yCor: yCor,
     corArr: corArr,
-    placement: function () {
+    placement: function (coordinates) {
       /*
       if the x coordinate + ship.length is greater than 10
       throw error
       else return
       */
-      if (xCor + ship.length > 10) {
-        throw new Error('Error: ship will not fit where you wish to place it.')
-      }
-      try {
-        corArr.push(coordinates)
-      } catch (e) {
-        console.error(e)
-      }
 
-      for (let i = 1; i < shipType.shipLength; i++) {
-        coordinates = { xCor: xCor + i, yCor }
-        corArr = []
-        corArr.push(coordinates)
+      if (coordinates.xCor + carrier.shipLength > 10) {
+        throw new Error('Error: ship will not fit where you wish to place it.')
+      } else {
+        for (let i = 0; i < carrier.shipLength; i++) {
+          corArr.push({ xCor: coordinates.xCor + i, yCor: coordinates.yCor })
+        }
+        return corArr
       }
-      return corArr
     },
-    receiveAttack: function () {
+    receiveAttack: function (coordinates) {
       /*
       if the coordinates hit were the same coordinates as a ship
       that ship will be hit
       else the coordinates will be returned as missed
       */
       for (let i = 0; i < corArr.length; i++) {
-        if (corArr[i] === coordinates) {
-          shipType.hit()
-        } else if (shipType.timesHit === shipType.length) {
-          shipType.sunk()
-          sunkArr.push(shipType)
-          if (sunkArr.length === 5) {
-            return gameOver
+        if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates, shipType.timesHit, shipType.sunk)) {
+          shipType.timesHit = shipType.timesHit + 1
+          if (shipType.timesHit === shipType.shipLength) {
+            sunkArr.push(shipType)
+            if (sunkArr.length === 5) {
+              return gameOver
+            }
+            shipType.sunk = true
+            return shipType.sunk
           }
-        } else {
-          missed.push(coordinates)
-          return missed
+          return shipType.timesHit
         }
       }
+
+      missed.push(coordinates)
+      return { missed }
     }
   }
 }
