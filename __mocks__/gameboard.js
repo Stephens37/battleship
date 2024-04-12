@@ -11,8 +11,10 @@ function gameboard (shipType, xCor, yCor) {
   let coordinates = { xCor, yCor }
   let corArr = [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }]
   let missed = [{ xCor: 2, yCor: 2 }]
+  let usedSquares = [{ xCor: 1, yCor: 1 }]
   return {
     missed: missed,
+    usedSquares: usedSquares,
     shipType: shipType,
     coordinates: coordinates,
     xCor: xCor,
@@ -48,12 +50,15 @@ function gameboard (shipType, xCor, yCor) {
             if (sunkArr.length === 5) {
               return gameOver
             }
+            usedSquares.push(coordinates)
             carrier.sunk = true
             return carrier.sunk
           }
+          usedSquares.push(coordinates)
           return carrier.timesHit
         }
       }
+      usedSquares.push(coordinates)
       missed.push(coordinates)
       return { missed }
     }

@@ -6,7 +6,8 @@ i will still have to input mock x and y coordinates for the attack
 
 const gameboard = require('./gameboard')
 let carrier = { shipLength: 5, timesHit: 3, sunk: false }
-let playerBoard = gameboard(carrier, 2, 2)
+let playerBoard = gameboard(carrier, 1, 1)
+let squareArr = playerBoard.usedSquares
 
 const chooseAgain = 'Choose again'
 
@@ -17,16 +18,17 @@ function player (shipType, xCor, yCor) {
     shipType: shipType,
     xCor: xCor,
     yCor: yCor,
-    test: function (coordinates) {
-      return playerBoard.receiveAttack(coordinates)
+    test: function () {
+      return squareArr
     },
     squareChosen: function (xCor, yCor) {
-      let coordinates = { xCor, yCor }
-      for (let i = 0; i < 1; i++) {
-        if (JSON.stringify({ xCor, yCor }) === JSON.stringify({ xCor: 2, yCor: 2 })) {
+      let coordinates = { xCor: 1, yCor: 1 }
+      for (let i = 0; i < playerBoard.missed.length; i++) {
+        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(squareArr[i])) {
           return chooseAgain
         }
       }
+      return playerBoard.receiveAttack(coordinates)
     },
     computerChoice: function () {
       function randomChoice (choice) {

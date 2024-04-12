@@ -9,10 +9,10 @@ let testPlayer = player(carrier, 1, 1)
 
 describe('player functionality', () => {
   test('try again', () => {
-    expect(testPlayer.squareChosen(2, 2)).toEqual('Choose again')
+    expect(testPlayer.squareChosen(1, 1)).toEqual('Choose again')
   })
   test('player chose', () => {
-    expect(testPlayer.test({ xCor: 1, yCor: 1 })).toEqual(4)
+    expect(testPlayer.squareChosen({ xCor: 1, yCor: 1 })).toEqual(4)
   })
   test('computer chose', () => {
     expect(testPlayer.computerChoice()).toBe(true)
