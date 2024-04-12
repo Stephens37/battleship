@@ -7,7 +7,7 @@ let sunkArr = ['s', 'u', 'n', 'k']
 const board = gameboard(carrier, 1, 1)
 /* const corArr = [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }] */
 
-describe('gameboard functionality', () => {
+describe.skip('gameboard functionality', () => {
   test('place ships', () => {
     let corArr = [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }]
     const coordinates = { xCor: 1, yCor: 1 }

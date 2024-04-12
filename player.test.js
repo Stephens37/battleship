@@ -1,16 +1,18 @@
 jest.mock('./player')
-jest.mock('./gameboard')
 const player = require('./player')
-const { carrier } = require('./gameboard')
+jest.mock('./gameboard')
+const gameboard = require('./gameboard')
 
+let carrier = { shipLength: 5, timesHit: 3, sunk: false }
+const board = gameboard(carrier, 1, 1)
 let testPlayer = player(carrier, 1, 1)
 
 describe('player functionality', () => {
   test('try again', () => {
-    expect(testPlayer.squareChosen(carrier, 2, 2)).toEqual('Choose again')
+    expect(testPlayer.squareChosen(2, 2)).toEqual('Choose again')
   })
-  test.skip('player chose', () => {
-    expect(testPlayer.squareChosen(1, 1)).toBe(4)
+  test('player chose', () => {
+    expect(testPlayer.test({ xCor: 1, yCor: 1 })).toEqual(board.receiveAttack({xCor: 1, yCor: 1}))
   })
   test('computer chose', () => {
     expect(testPlayer.computerChoice()).toBe(true)

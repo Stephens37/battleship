@@ -54,7 +54,6 @@ function gameboard (shipType, xCor, yCor) {
           return carrier.timesHit
         }
       }
-
       missed.push(coordinates)
       return { missed }
     }

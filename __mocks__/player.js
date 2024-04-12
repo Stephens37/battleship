@@ -5,7 +5,6 @@ i will still have to input mock x and y coordinates for the attack
 */
 
 jest.mock('./gameboard')
-
 const gameboard = require('./gameboard')
 let carrier = { shipLength: 5, timesHit: 3, sunk: false }
 let playerBoard = gameboard(carrier, 2, 2)
@@ -19,14 +18,16 @@ function player (shipType, xCor, yCor) {
     shipType: shipType,
     xCor: xCor,
     yCor: yCor,
-    squareChosen: function (shipType, xCor, yCor) {
+    test: function (coordinates) {
+      return playerBoard.receiveAttack(coordinates)
+    },
+    squareChosen: function (xCor, yCor) {
       let coordinates = { xCor, yCor }
       for (let i = 0; i < 1; i++) {
-        if (JSON.stringify({ xCor, yCor }) === JSON.stringify({xCor: 2, yCor: 2})) {
+        if (JSON.stringify({ xCor, yCor }) === JSON.stringify({ xCor: 2, yCor: 2 })) {
           return chooseAgain
         }
       }
-      return playerBoard.receiveAttack(shipType, coordinates)
     },
     computerChoice: function () {
       function randomChoice (choice) {
@@ -34,7 +35,13 @@ function player (shipType, xCor, yCor) {
       }
       let xCor = randomChoice(11)
       let yCor = randomChoice(11)
-      player.squareChosen(xCor, yCor)
+
+      let coordinates = { xCor, yCor }
+      for (let i = 0; i < 1; i++) {
+        if (JSON.stringify({ xCor, yCor }) === JSON.stringify({xCor: 2, yCor: 2})) {
+          randomChoice()
+        }
+      }
       return true
     }
   }
