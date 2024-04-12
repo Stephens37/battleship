@@ -4,7 +4,6 @@ therefore there is no need to have to create a mock gameboard function here
 i will still have to input mock x and y coordinates for the attack
 */
 
-jest.mock('./gameboard')
 const gameboard = require('./gameboard')
 let carrier = { shipLength: 5, timesHit: 3, sunk: false }
 let playerBoard = gameboard(carrier, 2, 2)
