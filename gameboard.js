@@ -39,12 +39,14 @@ let missed = []
 function gameboard (shipType, xCor, yCor) {
   let coordinates = { xCor, yCor }
   let corArr = []
+  let usedSquares = []
   return {
     shipType: shipType,
     coordinates: coordinates,
     xCor: xCor,
     yCor: yCor,
     corArr: corArr,
+    usedSquares: usedSquares,
     placement: function (coordinates) {
       /*
       if the x coordinate + ship.length is greater than 10
@@ -75,13 +77,15 @@ function gameboard (shipType, xCor, yCor) {
             if (sunkArr.length === 5) {
               return gameOver
             }
+            usedSquares.push(coordinates)
             shipType.sunk = true
             return shipType.sunk
           }
+          usedSquares.push(coordinates)
           return shipType.timesHit
         }
       }
-
+      usedSquares.push(coordinates)
       missed.push(coordinates)
       return { missed }
     }

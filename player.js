@@ -44,16 +44,10 @@ therefore there is no need to have to create a mock gameboard function here
 i will still have to input mock x and y coordinates for the attack
 */
 
-/*
-the gameboard.placement function is already being called in the gameboard tests
-therefore there is no need to have to create a mock gameboard function here
-i will still have to input mock x and y coordinates for the attack
-*/
-
-jest.mock('./gameboard')
 const gameboard = require('./gameboard')
-let carrier = { shipLength: 5, timesHit: 3, sunk: false }
-let playerBoard = gameboard(carrier, 2, 2)
+let shipType
+let playerBoard = gameboard(shipType, 1, 1)
+let squareArr = playerBoard.usedSquares
 
 const chooseAgain = 'Choose again'
 
@@ -64,14 +58,17 @@ function player (shipType, xCor, yCor) {
     shipType: shipType,
     xCor: xCor,
     yCor: yCor,
+    test: function () {
+      return squareArr
+    },
     squareChosen: function (xCor, yCor) {
-      let coordinates = { xCor, yCor }
-      for (let i = 0; i < 1; i++) {
-        if (JSON.stringify({ xCor, yCor }) === JSON.stringify({ xCor: 2, yCor: 2 })) {
+      let coordinates = { xCor: 1, yCor: 1 }
+      for (let i = 0; i < playerBoard.missed.length; i++) {
+        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(squareArr[i])) {
           return chooseAgain
         }
       }
-      playerBoard.receiveAttack(coordinates)
+      return playerBoard.receiveAttack(coordinates)
     },
     computerChoice: function () {
       function randomChoice (choice) {
@@ -82,11 +79,11 @@ function player (shipType, xCor, yCor) {
 
       let coordinates = { xCor, yCor }
       for (let i = 0; i < 1; i++) {
-        if (JSON.stringify({ xCor, yCor }) === JSON.stringify({xCor: 2, yCor: 2})) {
+        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(squareArr[i])) {
           randomChoice()
         }
       }
-      return playerBoard.receiveAttack(coordinates)
+      return true
     }
   }
 }

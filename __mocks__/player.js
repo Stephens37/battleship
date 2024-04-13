@@ -39,7 +39,7 @@ function player (shipType, xCor, yCor) {
 
       let coordinates = { xCor, yCor }
       for (let i = 0; i < 1; i++) {
-        if (JSON.stringify({ xCor, yCor }) === JSON.stringify({xCor: 2, yCor: 2})) {
+        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(squareArr[i])) {
           randomChoice()
         }
       }
