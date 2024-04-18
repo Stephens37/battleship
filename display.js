@@ -12,9 +12,14 @@ make the grid in css grid
 create loop that assigns square i , with i being the number, x and y coordinates
 assign each square a position a grid column and row position based upon their x and y coordinates
 make these squares children of the board class
+*/
 
 let playSqArr = []
 let compSqArr = []
+
+/*
+  
+*/
 
 function assignPCor() {
   let i = 0
@@ -29,6 +34,7 @@ function assignPCor() {
     x++
     playSqArr.push(playerSquare${`i`})
   }
+  return playSqArr
 }
 assignPCor()
 
@@ -45,6 +51,7 @@ function assignCCor() {
     x++
     compSqArr.push(compSquare${`i`})
   }
+  return compSqArr
 }
 assignCCor()
 
@@ -70,5 +77,3 @@ function compSquares() {
 }
 
 compSquares()
-
-*/
