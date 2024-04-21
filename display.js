@@ -18,61 +18,70 @@ let playSqArr = []
 let compSqArr = []
 
 /*
-  
+  create an array of coordinates without assigning them to a variable
+  loop through this array and assign each objects xCor and yCor as grid column/row values
 */
 
-function assignPCor() {
-  let i = 0
-  let playerSquare${`i`} = {xCor: x, yCor: y}
+function assignPCor () {
   let x = 0
   let y = 1
-  for (i = 0; i < boardArr.length; i++) {
-    if(i = (i % 10 = 0) + 1) {
+  for (let i = 0; i < 100; i++) {
+    if ((i - 1) % 10 === 0) {
       y++
       x = 1
     }
     x++
-    playSqArr.push(playerSquare${`i`})
+    playSqArr.push({ xCor: x, yCor: y })
   }
   return playSqArr
 }
 assignPCor()
 
-function assignCCor() {
-  let i = 0
-  let compSquare${`i`} = {xCor: x, yCor: y}
+function assignCCor () {
   let x = 0
   let y = 1
-  for (i = 0; i < boardArr.length; i++) {
-    if(i = (i % 10 = 0) + 1) {
+  for (let i = 0; i < 100; i++) {
+    if ((i - 1) % 10 === 0) {
       y++
       x = 1
     }
     x++
-    compSqArr.push(compSquare${`i`})
+    compSqArr.push({ xCor: x, yCor: y })
   }
   return compSqArr
 }
 assignCCor()
 
-let playerBoard = document.querySelector('#playerboard')
-let computerBoard = document.querySelector('#computerboard')
+/* the only question i have about not assigning a variable
+is how I will be able to assign colours, etc. to the squares
 
-function playerSquares() {
-  for(let i = 0; i < 100; i++) {
+perhaps later, i then find a match with the x and y coordinates,
+ex: if (grid-column: xCor && grid-row: yCor) then that grid-column and row is red
+*/
+
+const playerBoard = document.querySelector('#playerboard')
+const computerBoard = document.querySelector('#computerboard')
+
+function playerSquares () {
+  for (let i = 0; i < 100; i++) {
+    /* instead of
     playSqArr.playerSquare${`i`}.style.gridColumn = playSqArr.playerSquare${`i`}.xCor
-    playSqArr.playerSquare${`i`}.style.gridRow = playSqArr.playerSquare${`i`}.yCor
-    playerBoard.appendChild(playSqArr.playerSquare${`i`})
+    do
+    "gameboard".style.gridColumn = playSqArr[i].xCor
+    */
+    playerBoard.appendChild(playSqArr[i])
+    playSqArr[i].style.gridColumn = playSqArr[i].xCor
+    playSqArr[i].style.gridRow = playSqArr[i].yCor
   }
 }
 
 playerSquares()
 
-function compSquares() {
-  for(let i = 0; i < 100; i++) {
-    compSqArr.compSquare${`i`}.style.gridColumn = compSqArr.compSquare${`i`}.xCor
-    compSqArr.compSquare${`i`}.style.gridRow = compSqArr.compSquare${`i`}.yCor
-    playerBoard.appendChild(compSqArr.compSquare${`i`})
+function compSquares () {
+  for (let i = 0; i < 100; i++) {
+    computerBoard.appendChild(compSqArr[i])
+    compSqArr[i].style.gridColumn = compSqArr[i].xCor
+    compSqArr[i].style.gridRow = compSqArr[i].yCor
   }
 }
 

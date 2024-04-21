@@ -1,4 +1,18 @@
-const display = require('./display')
+/**
+ * @jest-environment jsdom
+ */
+
+require('text-encoding').TextEncoder
+require('text-encoding').TextDecoder
+
+const { JSDOM } = require('jsdom')
+
+const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>')
+global.document = dom.window.document
+global.window = dom.window
+global.navigator = dom.window.navigator
+
+const display = require('./display.js')
 
 describe('grid display', () => {
   test('p coordinate array', () => {
