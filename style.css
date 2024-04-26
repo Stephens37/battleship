@@ -24,6 +24,10 @@ header {
   height: 500px;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
+  border-width: 3px;
+  border-color: green;
+  border-style: solid;
+  gap: 2px;
 }
 
 #computerboard {
@@ -32,6 +36,10 @@ header {
   height: 500px;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
+  border-width: 3px;
+  border-color: green;
+  border-style: solid;
+  gap: 2px;
 }
 
 footer { 

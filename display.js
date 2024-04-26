@@ -62,13 +62,46 @@ ex: if (grid-column: xCor && grid-row: yCor) then that grid-column and row is re
 const playerBoard = document.querySelector('#playerboard')
 const computerBoard = document.querySelector('#computerboard')
 
-function playerSquares () {
+/*
+  square is clicked
+  grid-column = xCor
+  grid-row = yCor
+  run the ship hit function
+  if ship is hit colour the square red using this function
+  otherwise colour the square gray
+  either way make the square unclickable
+*/
+
+/*
+  make a loop that repeats 100 times
+  each time creates div that appends to board
+  id of the element is square${i}
+*/
+
+function createSquares() {
+  for(let i = 0; i < 100; i++) {
+    let square = document.createElement('div')
+  }
+}
+
+/*
+  need to be able to retrieve a square based on its x and y coordinates
+  to do this I will create a 10x10 grid
+  when a square is clicked check which spot in array has the xCor with the same number as grid-column
+  and yCor with the same number as grid-row
+*/
+
+/*
+*/
+
+/* function playerSquares () {
   for (let i = 0; i < 100; i++) {
-    /* instead of
+    instead of
     playSqArr.playerSquare${`i`}.style.gridColumn = playSqArr.playerSquare${`i`}.xCor
     do
     "gameboard".style.gridColumn = playSqArr[i].xCor
-    */
+    
+    
     playerBoard.appendChild(playSqArr[i])
     playSqArr[i].style.gridColumn = playSqArr[i].xCor
     playSqArr[i].style.gridRow = playSqArr[i].yCor
@@ -86,3 +119,5 @@ function compSquares () {
 }
 
 compSquares()
+*/
+
