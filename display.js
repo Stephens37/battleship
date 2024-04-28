@@ -73,16 +73,28 @@ const computerBoard = document.querySelector('#computerboard')
 */
 
 /*
-  make a loop that repeats 100 times
-  each time creates div that appends to board
-  id of the element is square${i}
+  how to create the grid display itself
+  to create this I need to assign each square to a div
+  I don't want 100 html elements so I want to create these in a loop
 */
 
-function createSquares() {
+function createPlayerSquares() {
   for(let i = 0; i < 100; i++) {
     let square = document.createElement('div')
+    square.setAttribute('class', 'playersq')
+    playerBoard.appendChild(square)
   }
 }
+createPlayerSquares()
+
+function createComputerSquares() {
+  for(let i = 0; i < 100; i++) {
+    let square = document.createElement('div')
+    square.setAttribute('class', 'computersq')
+    computerBoard.appendChild(square)
+  }
+}
+createComputerSquares()
 
 /*
   need to be able to retrieve a square based on its x and y coordinates
@@ -91,8 +103,6 @@ function createSquares() {
   and yCor with the same number as grid-row
 */
 
-/*
-*/
 
 /* function playerSquares () {
   for (let i = 0; i < 100; i++) {

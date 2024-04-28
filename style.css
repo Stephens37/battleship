@@ -11,11 +11,13 @@ header {
 #player {
   grid-row: 2;
   grid-column: 1;
+  align-content: center;
 }
 
 #computer {
   grid-row: 2;
   grid-column: 2;
+  align-content: center;
 }
 
 #playerboard {
@@ -25,9 +27,8 @@ header {
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
   border-width: 3px;
-  border-color: green;
+  border-color: black;
   border-style: solid;
-  gap: 2px;
 }
 
 #computerboard {
@@ -37,9 +38,20 @@ header {
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
   border-width: 3px;
-  border-color: green;
+  border-color: black;
   border-style: solid;
-  gap: 2px;
+}
+
+.playersq {
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
+}
+
+.computersq {
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
 }
 
 footer { 
