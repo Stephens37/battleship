@@ -3,7 +3,11 @@ const gameboard = require('./gameboard.js')
 let playSqArr = []
 let compSqArr = []
 
-function assignPCor () {
+const playerBoard = document.querySelector('#playerboard')
+const computerBoard = document.querySelector('#computerboard')
+
+const display = {
+  assignPCor: function () {
   let x = 0
   let y = 1
   for (let i = 0; i < 100; i++) {
@@ -15,10 +19,8 @@ function assignPCor () {
     playSqArr.push({ xCor: x, yCor: y })
   }
   return playSqArr
-}
-assignPCor()
-
-function assignCCor () {
+},
+  assignCCor: function () {
   let x = 0
   let y = 1
   for (let i = 0; i < 100; i++) {
@@ -30,30 +32,29 @@ function assignCCor () {
     compSqArr.push({ xCor: x, yCor: y })
   }
   return compSqArr
-}
-assignCCor()
-
-const playerBoard = document.querySelector('#playerboard')
-const computerBoard = document.querySelector('#computerboard')
-
-function createPlayerSquares() {
+},
+  createPlayerSquares: function () {
   for(let i = 0; i < 100; i++) {
     let square = document.createElement('div')
     square.setAttribute('class', 'playersq')
     playerBoard.appendChild(square)
   }
-}
-createPlayerSquares()
-
-function createComputerSquares() {
+},
+  createComputerSquares: function () {
   for(let i = 0; i < 100; i++) {
     let square = document.createElement('div')
     square.setAttribute('class', 'computersq')
     square.coordinates = gameboard.coordinates[i]
     computerBoard.appendChild(square)
   }
+  }
 }
-createComputerSquares()
+
+module.exports = {
+  display: display
+}
+
+
 
 
 

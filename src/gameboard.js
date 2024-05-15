@@ -21,7 +21,7 @@ ship.sunk() is called
 that ship is displayed in the sunk category
 */
 
-const { timesHit, sunk, shipLength } = require("../ship")
+const { timesHit, sunk, shipLength } = require("./ship")
 
 // const boardArr = Array.from({ length: 10 }, () => Array(10).fill(0))
 
