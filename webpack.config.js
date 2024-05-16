@@ -4,8 +4,8 @@ module.exports = {
   mode: 'development', // Set to 'production' for production
   entry: './src/index.js', // Entry point of your application
   output: {
-    path: path.resolve(__dirname, 'battleship'), // Output directory
-    filename: 'src/bundle.js', // Output filename
+    path: path.resolve(__dirname, 'dist'), // Output directory
+    filename: 'bundle.js', // Output filename
   },
   module: {
     rules: [
@@ -18,6 +18,10 @@ module.exports = {
             presets: ['@babel/preset-env'], // Use @babel/preset-env for compatibility with browsers
           },
         },
+      },
+      {
+        test: /\.css$/, // CSS rule
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },

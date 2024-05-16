@@ -29,6 +29,7 @@ const server = http.createServer((req, res) => {
         res.end('Internal Server Error');
       }
     } else {
+      console.log(`Request for ${filePath} received.`);
       res.writeHead(200, { 'Content-Type': contentType });
       res.end(content, 'utf-8');
     }
