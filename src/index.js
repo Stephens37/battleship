@@ -1,4 +1,4 @@
-import "./style.css"
-const display = require('./display.js')
-const gameboard = require('./gameboard.js')
-const player = require('./player.js')
+require("./styles.css")
+require("./display.js")
+require("./gameboard.js")
+require("./player.js")
