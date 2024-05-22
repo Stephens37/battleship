@@ -22,6 +22,9 @@ that ship is displayed in the sunk category
 */
 
 const { timesHit, sunk, shipLength } = require("./ship")
+const display = require('./display.js')
+let xCor = display.xCor
+let yCor = display.yCor
 
 // const boardArr = Array.from({ length: 10 }, () => Array(10).fill(0))
 

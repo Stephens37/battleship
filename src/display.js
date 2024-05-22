@@ -1,59 +1,94 @@
 const gameboard = require('./gameboard.js')
 
+let coordinates = [gameboard.xCor, gameboard.yCor]
+
 let playSqArr = []
 let compSqArr = []
+let xCor
+let yCor
 
 const playerBoard = document.querySelector('#playerboard')
 const computerBoard = document.querySelector('#computerboard')
 
-const display = {
-  assignPCor: function () {
-  let x = 0
-  let y = 1
-  for (let i = 0; i < 100; i++) {
-    if ((i - 1) % 10 === 0) {
-      y++
-      x = 1
+function display () {
+  return {
+    xCor: xCor,
+    yCor: yCor,
+    assignPCor: function () {
+    let x = 0
+    let y = 1
+    for (let i = 0; i < 100; i++) {
+      if ((i - 1) % 10 === 0) {
+        y++
+        x = 1
+      }
+      x++
+      playSqArr.push({ xCor: x, yCor: y })
     }
-    x++
-    playSqArr.push({ xCor: x, yCor: y })
-  }
-  return playSqArr
-},
-  assignCCor: function () {
-  let x = 0
-  let y = 1
-  for (let i = 0; i < 100; i++) {
-    if ((i - 1) % 10 === 0) {
-      y++
-      x = 1
+    return playSqArr
+  },
+    assignCCor: function () {
+    let x = 0
+    let y = 1
+    for (let i = 0; i < 100; i++) {
+      if ((i - 1) % 10 === 0) {
+        y++
+        x = 1
+      }
+      x++
+      compSqArr.push({ xCor: x, yCor: y })
     }
-    x++
-    compSqArr.push({ xCor: x, yCor: y })
-  }
-  return compSqArr
-},
-  createPlayerSquares: function () {
-  for(let i = 0; i < 100; i++) {
-    let square = document.createElement('div')
-    square.setAttribute('class', 'playersq')
-    playerBoard.appendChild(square)
-  }
-},
-  createComputerSquares: function () {
-  for(let i = 0; i < 100; i++) {
-    let square = document.createElement('div')
-    square.setAttribute('class', 'computersq')
-    square.coordinates = gameboard.coordinates[i]
-    computerBoard.appendChild(square)
-  }
+    return compSqArr
+  },
+    createPlayerSquares: function () {
+    for(let i = 0; i < 100; i++) {
+      let square = document.createElement('div')
+      square.setAttribute('class', 'playersq')
+      square.coordinates = playSqArr[i]
+      playerBoard.appendChild(square)
+    }
+    console.log('player')
+    return playerBoard
+  },
+    createComputerSquares: function () {
+    for(let i = 0; i < 100; i++) {
+      let square = document.createElement('div')
+      square.setAttribute('class', 'computersq')
+      square.coordinates = compSqArr[i]
+      computerBoard.appendChild(square)
+    }
+    console.log('computer')
+    return computerBoard
+    }
   }
 }
+
+let gameDisplay = display()
+
+gameDisplay.createPlayerSquares()
+gameDisplay.createComputerSquares()
 
 module.exports = {
   display: display
 }
 
+/*
+  create x and y coordinates within the display file
+  import the display object over to gameboard
+  gameboard x and y coordinates equal the display x and y coordinates
+  interaction happens in gameboard, uses functions from the display file
+
+  essentially, gameboard provides the interactions, display, displays them
+
+  gameboard should be relying on the display file to show interactions
+  display should not be relying on the gameboard file to interact with the display
+*/
+
+/*
+  create player coordinates
+  create squares for player, assign coordinates
+  do the same for computer
+*/
 
 
 

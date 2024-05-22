@@ -4,15 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="./src/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bakbak+One&display=swap" rel="stylesheet">
   <title>Battleship</title>
 </head>
 <body>
-  <header>BATTLESHIP</header>
+  <header><div id="title">BATTLESHIP</div></header>
   <div id="player">
-    <div id="playerboard" class="board"></div>
+    <div id="playergrid">
+      <div id="playerboard" class="board"></div>
+    </div>
   </div>
   <div id="computer">
-    <div id="computerboard" class="board"></div>
+    <div id="computergrid">
+      <div id="computerboard" class="board"></div>
+    </div>
   </div>
   <footer></footer>
   <script src="./dist/bundle.js" type="module"></script>

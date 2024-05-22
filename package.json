@@ -5,7 +5,8 @@
   "main": "ship.js",
   "scripts": {
     "test": "jest",
-    "build": "webpack"
+    "build": "webpack",
+    "start": "webpack serve --open"
   },
   "type": "commonjs",
   "jest": {
@@ -24,6 +25,7 @@
     "style-loader": "^4.0.0",
     "text-encoding": "^0.7.0",
     "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
   }
 }
