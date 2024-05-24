@@ -1,0 +1,5 @@
+- event listener triggers ship function with first ship as soon as page loaded
+- square is clicked and placement function is triggered
+- second through fifth ship function triggered with the same sequence
+
+- computer funct

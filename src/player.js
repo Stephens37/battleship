@@ -58,9 +58,6 @@ function player (shipType, xCor, yCor) {
     shipType: shipType,
     xCor: xCor,
     yCor: yCor,
-    test: function () {
-      return squareArr
-    },
     squareChosen: function (xCor, yCor) {
       let coordinates = { xCor: 1, yCor: 1 }
       for (let i = 0; i < playerBoard.missed.length; i++) {

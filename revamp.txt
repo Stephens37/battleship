@@ -1,0 +1,19 @@
+The player module was intended to be used as a module to render the player and computer gameboards.
+Currently, however, there are two functions:
+
+- one for telling the player to choose another spot of attack if a square that was already clicked on was tapped on
+- another to randomly generate the computer's choice of square
+
+Obviously neither of these fit in this module.
+They would fit better in the gameboard module as that module is meant for controlling the gameflow.
+
+The code located in the display.js module is a lot more fitting to be considered the player module.
+This is because it renders the player and computer boards, thus fulfilling the purpose of the player module.
+
+Changes to the player.js module and display.js module:
+
+- display.js becomes player.js
+
+- the contents of squareChosen() will be attached to receiveAttack() in the gameboard module
+- the computerChoice() function will be moved to the gameboard object
+- the tests used for these functions will be moved to gameboard.test.js and played out before proceeding with further developments
