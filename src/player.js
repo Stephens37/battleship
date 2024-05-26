@@ -1,88 +1,165 @@
-/*
-- player takes turn to hit a computer's spot
-- computer then chooses a randomized position to hit
-*/
+const gameboard = require('./gameboard.js')
 
-/* player clicks on a square
-gameboard.receiveAttack is then called and plays out
-*/
+let coordinates = [gameboard.xCor, gameboard.yCor]
 
-/* computer uses Math.random to choose a random coordinate
-if coordinate is in the missed array then reroll
-else call gameboard.receiveAttack
-*/
+let playSqArr = []
+let compSqArr = []
+let xCor
+let yCor
 
-/*
-  function player (shipType, xCor, yCor) {
-    const chooseAgain = 'Choose again'
+const playerBoard = document.querySelector('#playerboard')
+const computerBoard = document.querySelector('#computerboard')
 
-    function squareChosen (xCor, yCor) {
-      let coordinates = {xCor, yCor}
-      for(let i = 0; i < missed.length; i++) {
-        if (JSON.stringify({xCor, yCor} === JSON.stringify(missed[i]))) {
-          return chooseAgain
-        } else {
-          gameboard.receiveAttack(shipType, coordinates)
-        }
-      }
-    }
-
-    function computerChoice () {
-      function randomChoice (choice) {
-        return Math.floor(Math.random * choice)
-      }
-      let xCor = randomChoice(11)
-      let yCor = randomChoice(11)
-      squareChosen(xCor, yCor)
-    }
-  }
-*/
-
-/*
-the gameboard.placement function is already being called in the gameboard tests
-therefore there is no need to have to create a mock gameboard function here
-i will still have to input mock x and y coordinates for the attack
-*/
-
-const gameboard = require('./gameboard')
-let shipType
-let playerBoard = gameboard(shipType, 1, 1)
-let squareArr = playerBoard.usedSquares
-
-const chooseAgain = 'Choose again'
-
-/* let corArr = gameboard.placement(coordinates) */
-
-function player (shipType, xCor, yCor) {
+function display () {
   return {
-    shipType: shipType,
     xCor: xCor,
     yCor: yCor,
-    squareChosen: function (xCor, yCor) {
-      let coordinates = { xCor: 1, yCor: 1 }
-      for (let i = 0; i < playerBoard.missed.length; i++) {
-        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(squareArr[i])) {
-          return chooseAgain
-        }
+    assignPCor: function () {
+    let x = 0
+    let y = 1
+    for (let i = 0; i < 100; i++) {
+      if ((i - 1) % 10 === 0) {
+        y++
+        x = 1
       }
-      return playerBoard.receiveAttack(coordinates)
-    },
-    computerChoice: function () {
-      function randomChoice (choice) {
-        return Math.floor(Math.random * choice)
+      x++
+      playSqArr.push({ xCor: x, yCor: y })
+    }
+    return playSqArr
+  },
+    assignCCor: function () {
+    let x = 0
+    let y = 1
+    for (let i = 0; i < 100; i++) {
+      if ((i - 1) % 10 === 0) {
+        y++
+        x = 1
       }
-      let xCor = randomChoice(11)
-      let yCor = randomChoice(11)
-
-      let coordinates = { xCor, yCor }
-      for (let i = 0; i < 1; i++) {
-        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(squareArr[i])) {
-          randomChoice()
-        }
-      }
-      return true
+      x++
+      compSqArr.push({ xCor: x, yCor: y })
+    }
+    return compSqArr
+  },
+    createPlayerSquares: function () {
+    for(let i = 0; i < 100; i++) {
+      let square = document.createElement('div')
+      square.setAttribute('class', 'playersq')
+      square.coordinates = playSqArr[i]
+      playerBoard.appendChild(square)
+    }
+    console.log('player')
+    return playerBoard
+  },
+    createComputerSquares: function () {
+    for(let i = 0; i < 100; i++) {
+      let square = document.createElement('div')
+      square.setAttribute('class', 'computersq')
+      square.coordinates = compSqArr[i]
+      computerBoard.appendChild(square)
+    }
+    console.log('computer')
+    return computerBoard
     }
   }
 }
 
-module.exports = player
+let gameDisplay = display()
+
+gameDisplay.createPlayerSquares()
+gameDisplay.createComputerSquares()
+
+module.exports = {
+  display: display
+}
+
+/*
+  create x and y coordinates within the display file
+  import the display object over to gameboard
+  gameboard x and y coordinates equal the display x and y coordinates
+  interaction happens in gameboard, uses functions from the display file
+
+  essentially, gameboard provides the interactions, display, displays them
+
+  gameboard should be relying on the display file to show interactions
+  display should not be relying on the gameboard file to interact with the display
+*/
+
+/*
+  create player coordinates
+  create squares for player, assign coordinates
+  do the same for computer
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+  create an array of coordinates without assigning them to a variable
+  loop through this array and assign each objects xCor and yCor as grid column/row values
+*/
+
+/* the only question i have about not assigning a variable
+is how I will be able to assign colours, etc. to the squares
+
+perhaps later, i then find a match with the x and y coordinates,
+ex: if (grid-column: xCor && grid-row: yCor) then that grid-column and row is red
+*/
+
+/*
+  square is clicked
+  grid-column = xCor
+  grid-row = yCor
+  run the ship hit function
+  if ship is hit colour the square red using this function
+  otherwise colour the square gray
+  either way make the square unclickable
+*/
+
+/*
+  how to create the grid display itself
+  to create this I need to assign each square to a div
+  I don't want 100 html elements so I want to create these in a loop
+*/
+
+/*
+  need to be able to retrieve a square based on its x and y coordinates
+  to do this I will create a 10x10 grid
+  when a square is clicked check which spot in array has the xCor with the same number as grid-column
+  and yCor with the same number as grid-row
+*/
+
+
+/* function playerSquares () {
+  for (let i = 0; i < 100; i++) {
+    instead of
+    playSqArr.playerSquare${`i`}.style.gridColumn = playSqArr.playerSquare${`i`}.xCor
+    do
+    "gameboard".style.gridColumn = playSqArr[i].xCor
+    
+    
+    playerBoard.appendChild(playSqArr[i])
+    playSqArr[i].style.gridColumn = playSqArr[i].xCor
+    playSqArr[i].style.gridRow = playSqArr[i].yCor
+  }
+}
+
+playerSquares()
+
+function compSquares () {
+  for (let i = 0; i < 100; i++) {
+    computerBoard.appendChild(compSqArr[i])
+    compSqArr[i].style.gridColumn = compSqArr[i].xCor
+    compSqArr[i].style.gridRow = compSqArr[i].yCor
+  }
+}
+
+compSquares()
+*/

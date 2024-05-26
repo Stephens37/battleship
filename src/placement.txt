@@ -1,0 +1,9 @@
+- shiptype chosen
+- when square is clicked trigger placement function
+
+- the issue is that I want to loop over the ship types but I dont want to continue the loop
+- I want the loop to continue after the event listener and subsequent ship placement is fulfilled
+
+- shiptype is identified at the beginning of the placement function
+* shipType = shipArr[i] where i = 0
+- if the placement function fulfills the placement of the ship then i++

@@ -22,7 +22,7 @@ that ship is displayed in the sunk category
 */
 
 const { timesHit, sunk, shipLength } = require("./ship")
-const display = require('./display.js')
+const display = require('./player.js')
 let xCor = display.xCor
 let yCor = display.yCor
 
@@ -37,12 +37,15 @@ let cruiser = { shipLength: 3, timesHit: 0, sunk: false }
 let battleship = { shipLength: 4, timesHit: 0, sunk: false }
 let carrier = { shipLength: 5, timesHit: 0, sunk: false }
 
+const shipArr = [destroyer, submarine, cruiser, battleship, carrier]
+
 let missed = []
 
 function gameboard (shipType, xCor, yCor) {
   let coordinates = { xCor, yCor }
   let corArr = []
   let usedSquares = []
+  let t = 0
   return {
     shipType: shipType,
     coordinates: coordinates,
@@ -56,15 +59,18 @@ function gameboard (shipType, xCor, yCor) {
       throw error
       else return
       */
-
-      if (coordinates.xCor + carrier.shipLength > 10) {
-        throw new Error('Error: ship will not fit where you wish to place it.')
-      } else {
-        for (let i = 0; i < carrier.shipLength; i++) {
-          corArr.push({ xCor: coordinates.xCor + i, yCor: coordinates.yCor })
+        for(let i = 0; i < 4; i++) {
+          shipType = shipArr[i]
+        if (coordinates.xCor + shipType.shipLength > 10) {
+          throw new Error('Error: ship will not fit where you wish to place it.')
+        } else {
+          for (let i = 0; i < carrier.shipLength; i++) {
+            corArr.push({ xCor: coordinates.xCor + i, yCor: coordinates.yCor })
+          }
+          return corArr
         }
-        return corArr
       }
+      return corArr
     },
     receiveAttack: function (coordinates) {
       /*
@@ -73,7 +79,7 @@ function gameboard (shipType, xCor, yCor) {
       else the coordinates will be returned as missed
       */
       for (let i = 0; i < corArr.length; i++) {
-        if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates, shipType.timesHit, shipType.sunk)) {
+        if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates)) {
           shipType.timesHit = shipType.timesHit + 1
           if (shipType.timesHit === shipType.shipLength) {
             sunkArr.push(shipType)
@@ -91,6 +97,30 @@ function gameboard (shipType, xCor, yCor) {
       usedSquares.push(coordinates)
       missed.push(coordinates)
       return { missed }
+    },
+    squareChosen: function (xCor, yCor) {
+      let coordinates = { xCor, yCor }
+      for (let i = 0; i < missed.length; i++) {
+        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(usedSquares[i])) {
+          return chooseAgain
+        }
+      }
+      return receiveAttack(coordinates)
+    },
+    computerChoice: function () {
+      function randomChoice (choice) {
+        return Math.floor(Math.random * choice)
+      }
+      let xCor = randomChoice(11)
+      let yCor = randomChoice(11)
+
+      let coordinates = { xCor, yCor }
+      for (let i = 0; i < 1; i++) {
+        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(squareArr[i])) {
+          randomChoice()
+        }
+      }
+      return true
     }
   }
 }
