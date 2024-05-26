@@ -22,9 +22,9 @@ that ship is displayed in the sunk category
 */
 
 const { timesHit, sunk, shipLength } = require("./ship")
-const display = require('./player.js')
-let xCor = display.xCor
-let yCor = display.yCor
+const player = require('./player.js')
+let xCor = player.xCor
+let yCor = player.yCor
 
 // const boardArr = Array.from({ length: 10 }, () => Array(10).fill(0))
 
@@ -41,7 +41,7 @@ const shipArr = [destroyer, submarine, cruiser, battleship, carrier]
 
 let missed = []
 
-function gameboard (shipType, xCor, yCor) {
+function gameboard (xCor, yCor) {
   let coordinates = { xCor, yCor }
   let corArr = []
   let usedSquares = []
