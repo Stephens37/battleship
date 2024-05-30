@@ -1,13 +1,14 @@
-jest.mock('./gameboard')
-const gameboard = require('./gameboard')
+
+jest.mock('../src/gameboard.js')
+const gameboard = require('../src/gameboard.js')
 let carrier = { shipLength: 5, timesHit: 3, sunk: false }
 let missed = []
 let sunkArr = ['s', 'u', 'n', 'k']
 
-const board = gameboard(1, 1)
+const board = gameboard()
 /* const corArr = [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }] */
 
-describe.skip('gameboard functionality', () => {
+describe('gameboard functionality', () => {
   test('place ships', () => {
     let corArr = [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }]
     const coordinates = { xCor: 1, yCor: 1 }
@@ -16,7 +17,7 @@ describe.skip('gameboard functionality', () => {
 
   test('placement error', () => {
     const coordinates = { xCor: 8, yCor: 1 }
-    expect(() => board.placement(coordinates)).toThrow(new Error('Error: s1hip will not fit where you wish to place it.'))
+    expect(() => board.placement(coordinates)).toThrow(new Error('Error: ship will not fit where you wish to place it.'))
   })
 
   test('receive attack', () => {

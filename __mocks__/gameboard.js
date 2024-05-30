@@ -7,7 +7,7 @@ const gameOver = 'Game Over'
 
 let carrier = { shipLength: 5, timesHit: 3, sunk: false }
 
-function gameboard (shipType, xCor, yCor) {
+function gameboard () {
   let coordinates = { xCor, yCor }
   let corArr = [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }]
   let missed = [{ xCor: 2, yCor: 2 }]
@@ -20,7 +20,7 @@ function gameboard (shipType, xCor, yCor) {
     xCor: xCor,
     yCor: yCor,
     corArr: corArr,
-    placement: function (coordinates) {
+    placement: jest.fn(function (coordinates) {
       /*
       if the x coordinate + ship.length is greater than 10
       throw error
@@ -35,8 +35,8 @@ function gameboard (shipType, xCor, yCor) {
         }
         return corArr
       }
-    },
-    receiveAttack: function (coordinates) {
+    }),
+    receiveAttack: jest.fn((coordinates) => {
       /*
       if the coordinates hit were the same coordinates as a ship
       that ship will be hit
@@ -61,7 +61,31 @@ function gameboard (shipType, xCor, yCor) {
       usedSquares.push(coordinates)
       missed.push(coordinates)
       return { missed }
-    }
+    }),
+    squareChosen: jest.fn( (xCor, yCor) => {
+      let coordinates = { xCor, yCor }
+      for (let i = 0; i < missed.length; i++) {
+        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(usedSquares[i])) {
+          return chooseAgain
+        }
+      }
+      return receiveAttack(coordinates)
+    }),
+    computerChoice: jest.fn(() => {
+      function randomChoice (choice) {
+        return Math.floor(Math.random * choice)
+      }
+      let xCor = randomChoice(11)
+      let yCor = randomChoice(11)
+
+      let coordinates = { xCor, yCor }
+      for (let i = 0; i < 1; i++) {
+        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(squareArr[i])) {
+          randomChoice()
+        }
+      }
+      return true
+    })
   }
 }
 

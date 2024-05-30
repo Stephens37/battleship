@@ -4,15 +4,15 @@ therefore there is no need to have to create a mock gameboard function here
 i will still have to input mock x and y coordinates for the attack
 */
 
-const gameboard = require('./gameboard')
+/* const gameboard = require('./gameboard')
 let carrier = { shipLength: 5, timesHit: 3, sunk: false }
 let playerBoard = gameboard(carrier, 1, 1)
 let squareArr = playerBoard.usedSquares
 
 const chooseAgain = 'Choose again'
-
+*/
 /* let corArr = gameboard.placement(coordinates) */
-
+/*
 function player (shipType, xCor, yCor) {
   return {
     shipType: shipType,
@@ -49,3 +49,4 @@ function player (shipType, xCor, yCor) {
 }
 
 module.exports = player
+*/
