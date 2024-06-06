@@ -41,7 +41,7 @@ const shipArr = [destroyer, submarine, cruiser, battleship, carrier]
 
 let missed = []
 
-function gameboard () {
+function gameboard (xCor, yCor, shipType) {
   let coordinates = { xCor, yCor }
   let corArr = []
   let usedSquares = []
@@ -78,6 +78,11 @@ function gameboard () {
       that ship will be hit
       else the coordinates will be returned as missed
       */
+      for (let i = 0; i < missed.length; i++) {
+        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(usedSquares[i])) {
+          return chooseAgain
+        }
+      }
       for (let i = 0; i < corArr.length; i++) {
         if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates)) {
           shipType.timesHit = shipType.timesHit + 1
@@ -98,7 +103,7 @@ function gameboard () {
       missed.push(coordinates)
       return { missed }
     },
-    squareChosen: function (xCor, yCor) {
+    /* squareChosen: function (xCor, yCor) {
       let coordinates = { xCor, yCor }
       for (let i = 0; i < missed.length; i++) {
         if (JSON.stringify({ xCor, yCor }) === JSON.stringify(usedSquares[i])) {
@@ -106,7 +111,7 @@ function gameboard () {
         }
       }
       return receiveAttack(coordinates)
-    },
+    }, */
     computerChoice: function () {
       function randomChoice (choice) {
         return Math.floor(Math.random * choice)

@@ -7,7 +7,7 @@ const gameOver = 'Game Over'
 
 let carrier = { shipLength: 5, timesHit: 3, sunk: false }
 
-function gameboard () {
+function gameboard (xCor, yCor, shipType) {
   let coordinates = { xCor, yCor }
   let corArr = [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }]
   let missed = [{ xCor: 2, yCor: 2 }]

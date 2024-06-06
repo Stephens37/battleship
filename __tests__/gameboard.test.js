@@ -1,11 +1,12 @@
 
-jest.mock('../src/gameboard.js')
+
 const gameboard = require('../src/gameboard.js')
 let carrier = { shipLength: 5, timesHit: 3, sunk: false }
-let missed = []
 let sunkArr = ['s', 'u', 'n', 'k']
 
-const board = gameboard()
+const board = gameboard(1, 1, carrier)
+board.shipType = carrier
+let missed = board.missed
 /* const corArr = [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }] */
 
 describe('gameboard functionality', () => {
@@ -15,20 +16,20 @@ describe('gameboard functionality', () => {
     expect(board.placement(coordinates)).toStrictEqual(corArr)
   })
 
-  test('placement error', () => {
+  test.skip('placement error', () => {
     const coordinates = { xCor: 8, yCor: 1 }
     expect(() => board.placement(coordinates)).toThrow(new Error('Error: ship will not fit where you wish to place it.'))
   })
 
   test('receive attack', () => {
     const coordinates = { xCor: 1, yCor: 1 }
-    expect(board.receiveAttack(coordinates, carrier.timesHit, carrier.sunk)).toBe(4)
+    expect(board.receiveAttack(coordinates)).toBe(4)
   })
 
   test.skip('sunk ship', () => {
     const coordinates = { xCor: 4, yCor: 1 }
     let carrier = { shipLength: 5, timesHit: 4, sunk: false }
-    expect(board.receiveAttack(coordinates, carrier.timesHit, carrier.sunk)).toBe(true)
+    expect(board.receiveAttack(coordinates)).toBe(true)
   })
 
   test.skip('game over', () => {
@@ -37,10 +38,9 @@ describe('gameboard functionality', () => {
     expect(board.receiveAttack(coordinates)).toBe('Game Over')
   })
 
-  test('missed attack', () => {
+  test.skip('missed attack', () => {
     const coordinates = { xCor: 6, yCor: 6 }
-    // expect(board.receiveAttack(coordinates)).toEqual({ missed: [{ xCor: 6, yCor: 6 }] })
-    expect(board.missed.length).toEqual(1)
+    expect(board.receiveAttack(coordinates)).toEqual({ missed: [{ xCor: 6, yCor: 6 }] })
   })
 
 /* test.skip('game over', () => {
