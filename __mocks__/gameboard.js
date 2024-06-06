@@ -1,4 +1,4 @@
-const { timesHit, sunk, shipLength } = require("../ship")
+const { timesHit, sunk, shipLength } = require("./ship")
 
 const boardArr = Array.from({ length: 10 }, () => Array(10).fill(0))
 
@@ -42,25 +42,7 @@ function gameboard () {
       that ship will be hit
       else the coordinates will be returned as missed
       */
-      for (let i = 0; i < corArr.length; i++) {
-        if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates, carrier.timesHit, carrier.sunk)) {
-          carrier.timesHit = carrier.timesHit + 1
-          if (carrier.timesHit === carrier.shipLength) {
-            sunkArr.push(carrier)
-            if (sunkArr.length === 5) {
-              return gameOver
-            }
-            usedSquares.push(coordinates)
-            carrier.sunk = true
-            return carrier.sunk
-          }
-          usedSquares.push(coordinates)
-          return carrier.timesHit
-        }
-      }
-      usedSquares.push(coordinates)
-      missed.push(coordinates)
-      return { missed }
+      return [{ xCor: 1, yCor: 1 }, { xCor: 2, yCor: 1 }, { xCor: 3, yCor: 1 }, { xCor: 4, yCor: 1 }, { xCor: 5, yCor: 1 }]
     }),
     squareChosen: jest.fn( (xCor, yCor) => {
       let coordinates = { xCor, yCor }
