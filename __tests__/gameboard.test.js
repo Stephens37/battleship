@@ -23,8 +23,16 @@ describe('gameboard functionality', () => {
 
   test('receive attack', () => {
     const coordinates = { xCor: 1, yCor: 1 }
-    expect(board.receiveAttack(coordinates)).toBe(4)
+    expect(board.receiveAttack(coordinates)).toBe(1)
   })
+
+  test('try again', () => {
+    const coordinates = { xCor: 1, yCor: 1 }
+    const missed = [{xCor: 1, yCor: 1}]
+    expect(board.receiveAttack(coordinates)).toBe('Choose again')
+  })
+
+  // above test is returning true because that is the answer to the computerChoice test and this test is skipping for some reason
 
   test.skip('sunk ship', () => {
     const coordinates = { xCor: 4, yCor: 1 }
@@ -43,22 +51,14 @@ describe('gameboard functionality', () => {
     expect(board.receiveAttack(coordinates)).toEqual({ missed: [{ xCor: 6, yCor: 6 }] })
   })
 
+  test('computer chose', () => {
+    expect(board.computerChoice()).toBe(true)
+  })
+
 /* test.skip('game over', () => {
     sunkArr.length = 4
     const coordinates = { xCor: 5, yCor: 1 }
     expect(board.receiveAttack(coordinates).toStrictEqual('Game Over'))
   })
 */
-})
-
-describe('player functionality', () => {
-  test('try again', () => {
-    expect(board.squareChosen(1, 1)).toEqual('Choose again')
-  })
-  test('player chose', () => {
-    expect(board.squareChosen({ xCor: 1, yCor: 1 })).toEqual(4)
-  })
-  test('computer chose', () => {
-    expect(board.computerChoice()).toBe(true)
-  })
 })

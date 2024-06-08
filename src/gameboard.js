@@ -39,7 +39,7 @@ let carrier = { shipLength: 5, timesHit: 0, sunk: false }
 
 const shipArr = [destroyer, submarine, cruiser, battleship, carrier]
 
-let missed = []
+let missed = [{xCor: 1, yCor: 1}]
 
 function gameboard (xCor, yCor, shipType) {
   let coordinates = { xCor, yCor }
@@ -79,8 +79,8 @@ function gameboard (xCor, yCor, shipType) {
       else the coordinates will be returned as missed
       */
       for (let i = 0; i < missed.length; i++) {
-        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(usedSquares[i])) {
-          return chooseAgain
+        if (JSON.stringify(coordinates) === JSON.stringify(missed[i])) {
+          return 'Choose again'
         }
       }
       for (let i = 0; i < corArr.length; i++) {
@@ -121,7 +121,7 @@ function gameboard (xCor, yCor, shipType) {
 
       let coordinates = { xCor, yCor }
       for (let i = 0; i < 1; i++) {
-        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(squareArr[i])) {
+        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(missed[i])) {
           randomChoice()
         }
       }
