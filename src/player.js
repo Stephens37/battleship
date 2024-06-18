@@ -1,7 +1,3 @@
-const gameboard = require('./gameboard.js')
-
-let coordinates = [gameboard.xCor, gameboard.yCor]
-
 let playSqArr = []
 let compSqArr = []
 let xCor
@@ -26,39 +22,41 @@ function display () {
       playSqArr.push({ xCor: x, yCor: y })
     }
     return playSqArr
-  },
-    assignCCor: function () {
-    let x = 0
-    let y = 1
-    for (let i = 0; i < 100; i++) {
-      if ((i - 1) % 10 === 0) {
-        y++
-        x = 1
+    },
+      assignCCor: function () {
+      let x = 0
+      let y = 1
+      for (let i = 0; i < 100; i++) {
+        if ((i - 1) % 10 === 0) {
+          y++
+          x = 1
+        }
+        x++
+        compSqArr.push({ xCor: x, yCor: y })
       }
-      x++
-      compSqArr.push({ xCor: x, yCor: y })
-    }
-    return compSqArr
-  },
-    createPlayerSquares: function () {
-    for(let i = 0; i < 100; i++) {
-      let square = document.createElement('div')
-      square.setAttribute('class', 'playersq')
-      square.coordinates = playSqArr[i]
-      playerBoard.appendChild(square)
-    }
-    console.log('player')
-    return playerBoard
-  },
-    createComputerSquares: function () {
-    for(let i = 0; i < 100; i++) {
-      let square = document.createElement('div')
-      square.setAttribute('class', 'computersq')
-      square.coordinates = compSqArr[i]
-      computerBoard.appendChild(square)
-    }
-    console.log('computer')
-    return computerBoard
+      return compSqArr
+    },
+      createPlayerSquares: function () {
+        let squareDisArr
+      for(let i = 0; i < 100; i++) {
+        let square = document.createElement('div')
+        square.setAttribute('class', 'playersq')
+        square.coordinates = playSqArr[i]
+        playerBoard.appendChild(square)
+        
+      }
+      console.log('player')
+      return playerBoard
+    },
+      createComputerSquares: function () {
+      for(let i = 0; i < 100; i++) {
+        let square = document.createElement('div')
+        square.setAttribute('class', 'computersq')
+        square.coordinates = compSqArr[i]
+        computerBoard.appendChild(square)
+      }
+      console.log('computer')
+      return computerBoard
     }
   }
 }
@@ -67,6 +65,8 @@ let gameDisplay = display()
 
 gameDisplay.createPlayerSquares()
 gameDisplay.createComputerSquares()
+
+
 
 module.exports = {
   display: display

@@ -1,5 +1,26 @@
-- event listener triggers ship function with first ship as soon as page loaded
-- square is clicked and placement function is triggered
-- second through fifth ship function triggered with the same sequence
+how do I make a square clickable if:
+- I don't want to call the gameboard function because that would create an interwoven dependency
+- the square has only a class
+- I want to access the coordinates of the square I am clicking but to access it through a class would create errors
+- javascript recommends that I do not create template literal ids
 
-- computer funct
+
+I could:
+- create the event listener in the the index file
+- have it select the square class
+- have it find the coordinates of the square that was clicked with said class (main challenge !!!)
+
+- how to find the 
+
+- call the placement function with said coordinates
+- within the placement function add code that changes the color of the selected squares to green
+
+- that then begs the question: "how do I change the colors of each square by their coordinates?"
+- is there a way to select the coordinates from the array not by its place in the array but by the value itself?
+
+But then that would mean that i wouldn't be able to use a loop for the function
+
+What I could do instead:
+- keep the rest of the function
+- add a "s" variable outside the function
+- s goes up by 1 each time

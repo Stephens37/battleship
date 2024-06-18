@@ -20,7 +20,7 @@ when a ship is sunken
 ship.sunk() is called
 that ship is displayed in the sunk category
 */
-
+const player = require('./player.js')
 const { timesHit, sunk, shipLength } = require("./ship")
 // const player = require('./player.js')
 // let xCor = player.xCor
@@ -39,13 +39,18 @@ let carrier = { shipLength: 5, timesHit: 0, sunk: false }
 
 const shipArr = [destroyer, submarine, cruiser, battleship, carrier]
 
-let missed = [{xCor: 1, yCor: 1}]
+let missed = []
 
-function gameboard (xCor, yCor, shipType) {
+let xCor = player.xCor
+let yCor = player.yCor
+
+function gameboard () {
   let coordinates = { xCor, yCor }
   let corArr = []
   let usedSquares = []
   let t = 0
+  let s = 0
+  let shipType
   return {
     shipType: shipType,
     coordinates: coordinates,
@@ -59,18 +64,24 @@ function gameboard (xCor, yCor, shipType) {
       throw error
       else return
       */
-        for(let i = 0; i < 4; i++) {
-          shipType = shipArr[i]
-        if (coordinates.xCor + shipType.shipLength > 10) {
-          throw new Error('Error: ship will not fit where you wish to place it.')
-        } else {
-          for (let i = 0; i < carrier.shipLength; i++) {
-            corArr.push({ xCor: coordinates.xCor + i, yCor: coordinates.yCor })
-          }
-          return corArr
+     /* function waits for square to be clicked
+        placement function called
+        ship type is the first ship array item
+        the rest of the looped function triggers
+     */
+        console.log('hi')
+        shipType = shipArr[s]
+      if (coordinates.xCor + shipType.shipLength > 10) {
+        throw new Error('Error: ship will not fit where you wish to place it.')
+      } else {
+        for (let i = 0; i < shipType.shipLength; i++) {
+          corArr.push({ xCor: coordinates.xCor + i, yCor: coordinates.yCor })
+          this.shipType.coordinates = corArr
         }
+        s++
+        console.log('hi')
+        return corArr
       }
-      return corArr
     },
     receiveAttack: function (coordinates) {
       /*

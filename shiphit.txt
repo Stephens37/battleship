@@ -1,0 +1,4 @@
+- add another property to the ship object "corArr"
+- shipArr has 5 corArr
+- these arrays will be looped through one by one to see if coordinates match
+- if the coordinates match then add 1 to the timesHit value
