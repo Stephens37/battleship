@@ -13,27 +13,32 @@ function display () {
     assignPCor: function () {
     let x = 0
     let y = 1
-    for (let i = 0; i < 100; i++) {
-      if ((i - 1) % 10 === 0) {
-        y++
+    for (let i = 0; i < 101; i++) {
+      if ((i - 1) % 10 === 0 && i !== 1) {
         x = 1
+        y++
+        playSqArr.push({ xCor: x, yCor: y })
+      } else {
+        x++
+        playSqArr.push({ xCor: x, yCor: y })
       }
-      x++
-      playSqArr.push({ xCor: x, yCor: y })
     }
     return playSqArr
     },
       assignCCor: function () {
       let x = 0
       let y = 1
-      for (let i = 0; i < 100; i++) {
-        if ((i - 1) % 10 === 0) {
-          y++
+      for (let i = 0; i < 101; i++) {
+        if ((i - 1) % 10 === 0 && i !== 1) {
           x = 1
-        }
+          y++
+          compSqArr.push({ xCor: x, yCor: y })
+        } else {
         x++
         compSqArr.push({ xCor: x, yCor: y })
+        }
       }
+      console.log(compSqArr)
       return compSqArr
     },
       createPlayerSquares: function () {

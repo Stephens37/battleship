@@ -35,4 +35,5 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.css'],
   },
+  watch: true
 };
