@@ -21,7 +21,7 @@ ship.sunk() is called
 that ship is displayed in the sunk category
 */
 const player = require('./player.js')
-const { timesHit, sunk, shipLength } = require("./ship")
+const { timesHit, shipLength, sunk, corArr } = require("./ship")
 // const player = require('./player.js')
 // let xCor = player.xCor
 // let yCor = player.yCor
@@ -46,7 +46,6 @@ let yCor = player.yCor
 
 function gameboard () {
   let coordinates = { xCor, yCor }
-  let corArr = []
   let usedSquares = []
   let t = 0
   let s = 0
@@ -56,7 +55,6 @@ function gameboard () {
     coordinates: coordinates,
     xCor: xCor,
     yCor: yCor,
-    corArr: corArr,
     usedSquares: usedSquares,
     placement: function (coordinates) {
       /*
@@ -74,9 +72,10 @@ function gameboard () {
       if (coordinates.xCor + shipType.shipLength > 10) {
         throw new Error('Error: ship will not fit where you wish to place it.')
       } else {
+        shipType.corArr = []
         for (let i = 0; i < shipType.shipLength; i++) {
-          corArr.push({ xCor: coordinates.xCor + i, yCor: coordinates.yCor })
-          this.shipType.coordinates = corArr
+          shipType.corArr.push({ xCor: coordinates.xCor + i, yCor: coordinates.yCor })
+          console.log(shipType.corArr)
         }
         s++
         console.log('hi')

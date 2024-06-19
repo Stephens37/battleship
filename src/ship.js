@@ -3,6 +3,7 @@ function ship (shipLength, timesHit, sunk) {
     shipLength: shipLength,
     timesHit: timesHit,
     sunk: sunk,
+    corArr: [],
     hit: function () {
       timesHit += 1
       return timesHit
