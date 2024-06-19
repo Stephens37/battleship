@@ -42,8 +42,9 @@ function display () {
         let square = document.createElement('div')
         square.setAttribute('class', 'playersq')
         square.coordinates = playSqArr[i]
+        console.log(playSqArr[i])
         playerBoard.appendChild(square)
-        
+        console.log(square)
       }
       console.log('player')
       return playerBoard
@@ -63,6 +64,8 @@ function display () {
 
 let gameDisplay = display()
 
+gameDisplay.assignCCor()
+gameDisplay.assignPCor()
 gameDisplay.createPlayerSquares()
 gameDisplay.createComputerSquares()
 
