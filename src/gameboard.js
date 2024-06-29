@@ -21,7 +21,7 @@ ship.sunk() is called
 that ship is displayed in the sunk category
 */
 const { gameDisplay, playSqArr } = require('./player.js')
-const { timesHit, shipLength, sunk, corArr } = require("./ship")
+const { timesHit, shipLength, sunk } = require("./ship")
 // const player = require('./player.js')
 // let xCor = player.xCor
 // let yCor = player.yCor
@@ -37,7 +37,8 @@ let cruiser = { shipLength: 3, timesHit: 0, sunk: false }
 let battleship = { shipLength: 4, timesHit: 0, sunk: false }
 let carrier = { shipLength: 5, timesHit: 0, sunk: false }
 
-const shipArr = [destroyer, submarine, cruiser, battleship, carrier]
+let playShipArr = [destroyer, submarine, cruiser, battleship, carrier]
+let compShipArr = [destroyer, submarine, cruiser, battleship, carrier]
 
 let missed = []
 
@@ -57,8 +58,29 @@ function gameboard () {
     xCor: xCor,
     yCor: yCor,
     usedSquares: usedSquares,
-    placement: function (coordinates) {
-        shipType = shipArr[s]
+    computerPlacement: function () {
+      for(let i = 0; i < 5; i++) {
+      shipType = compShipArr[i]
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+      }
+      xCor = getRandomInt(11)
+      yCor = getRandomInt(11)
+      if (xCor + shipType.shipLength > 10 || xCor === 0 || yCor === 0) {
+        xCor = getRandomInt(11)
+        yCor = getRandomInt(11)
+      } else {
+          shipType.corArr = []
+        for (let i = 0; i < shipType.shipLength; i++) {
+          shipType.corArr.push({ xCor: xCor + i, yCor: yCor })
+          }
+        }
+        console.log(shipType.corArr)
+        s++
+        }
+      },
+      placement: function (coordinates) {
+        shipType = playShipArr[s]
       if (coordinates.xCor + shipType.shipLength > 10) {
         throw new Error('Error: ship will not fit where you wish to place it.')
       } else {
@@ -77,9 +99,11 @@ function gameboard () {
         }
         s++
         console.log('hi')
-        return corArr
+        if(s === 5) {
+          this.computerPlacement()
+        }
       },
-    receiveAttack: function (coordinates) {
+      receiveAttack: function (coordinates) {
       /*
       if the coordinates hit were the same coordinates as a ship
       that ship will be hit
