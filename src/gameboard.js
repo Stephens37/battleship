@@ -78,6 +78,8 @@ function gameboard () {
         console.log(shipType.corArr)
         s++
         }
+        document.querySelector('footer').textContent = 'Let the games begin'
+
       },
       placement: function (coordinates) {
         shipType = playShipArr[s]
@@ -161,4 +163,4 @@ function gameboard () {
   }
 }
 
-module.exports = gameboard
+module.exports = { gameboard, carrier }

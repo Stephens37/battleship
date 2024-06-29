@@ -3,7 +3,6 @@ const gameboardRequire = require("./gameboard.js")
 const playerRequire = require("./player.js")
 const gameboard = gameboardRequire()
 
-
 document.addEventListener('DOMContentLoaded', function() {
     let squares = document.querySelectorAll('.playersq')
     squares.forEach(function(square) {
@@ -12,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('bye')
                 }
             gameboard.placement(square.coordinates)
+            if(gameboard.computerPlacement === true) {
+                gameboard.placement(square.coordinates)
+            }
         })
     })
 })  
@@ -26,4 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
 - is there a way to detect the attributes of an object simply based on it's click?
 */
 
+/*
+- have the event listener 
+*/
 
