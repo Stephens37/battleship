@@ -20,7 +20,7 @@ when a ship is sunken
 ship.sunk() is called
 that ship is displayed in the sunk category
 */
-const player = require('./player.js')
+const { gameDisplay, playSqArr } = require('./player.js')
 const { timesHit, shipLength, sunk, corArr } = require("./ship")
 // const player = require('./player.js')
 // let xCor = player.xCor
@@ -44,6 +44,7 @@ let missed = []
 let xCor = player.xCor
 let yCor = player.yCor
 
+
 function gameboard () {
   let coordinates = { xCor, yCor }
   let usedSquares = []
@@ -57,31 +58,27 @@ function gameboard () {
     yCor: yCor,
     usedSquares: usedSquares,
     placement: function (coordinates) {
-      /*
-      if the x coordinate + ship.length is greater than 10
-      throw error
-      else return
-      */
-     /* function waits for square to be clicked
-        placement function called
-        ship type is the first ship array item
-        the rest of the looped function triggers
-     */
-        console.log('hi')
         shipType = shipArr[s]
       if (coordinates.xCor + shipType.shipLength > 10) {
         throw new Error('Error: ship will not fit where you wish to place it.')
       } else {
         shipType.corArr = []
+        console.log(playSqArr)
         for (let i = 0; i < shipType.shipLength; i++) {
           shipType.corArr.push({ xCor: coordinates.xCor + i, yCor: coordinates.yCor })
-          console.log(shipType.corArr)
+          let sqColor = { xCor: coordinates.xCor + i, yCor: coordinates.yCor }
+          //SET COLOR ON COORDINATES BY MATCHING THEM WITH THE DIV THAT HAS THE SAME COORDINATES
+          /*for (let i = 0; i < 100; i++) {
+            if (sqColor.xCor == playSqArr[i].coordinates.xCor) {
+              playSqArr[i].style.color = 'green'
+            }*/
+          gameDisplay.colorCoordinates(sqColor.xCor, sqColor.yCor, 'green')
+          }
         }
         s++
         console.log('hi')
         return corArr
-      }
-    },
+      },
     receiveAttack: function (coordinates) {
       /*
       if the coordinates hit were the same coordinates as a ship

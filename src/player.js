@@ -1,3 +1,5 @@
+let playCorArr = []
+let compCorArr = []
 let playSqArr = []
 let compSqArr = []
 let xCor
@@ -17,10 +19,10 @@ function display () {
       if ((i - 1) % 10 === 0 && i !== 1) {
         x = 1
         y++
-        playSqArr.push({ xCor: x, yCor: y })
+        playCorArr.push({ xCor: x, yCor: y })
       } else {
         x++
-        playSqArr.push({ xCor: x, yCor: y })
+        playCorArr.push({ xCor: x, yCor: y })
       }
     }
     return playSqArr
@@ -32,10 +34,10 @@ function display () {
         if ((i - 1) % 10 === 0 && i !== 1) {
           x = 1
           y++
-          compSqArr.push({ xCor: x, yCor: y })
+          compCorArr.push({ xCor: x, yCor: y })
         } else {
         x++
-        compSqArr.push({ xCor: x, yCor: y })
+        compCorArr.push({ xCor: x, yCor: y })
         }
       }
       console.log(compSqArr)
@@ -46,8 +48,10 @@ function display () {
       for(let i = 0; i < 100; i++) {
         let square = document.createElement('div')
         square.setAttribute('class', 'playersq')
-        square.coordinates = playSqArr[i]
-        console.log(playSqArr[i])
+        square.coordinates = playCorArr[i]
+        console.log(square.coordinates)
+        console.log(playCorArr[i])
+        playSqArr.push(square)
         playerBoard.appendChild(square)
         console.log(square)
       }
@@ -58,12 +62,23 @@ function display () {
       for(let i = 0; i < 100; i++) {
         let square = document.createElement('div')
         square.setAttribute('class', 'computersq')
-        square.coordinates = compSqArr[i]
+        square.coordinates = compCorArr[i]
+        console.log(square)
         computerBoard.appendChild(square)
       }
       console.log('computer')
       return computerBoard
-    }
+    },
+      colorCoordinates: function (coorX, coorY, color) {
+        for(let i = 0; i < 100; i++) {
+          if (coorX === playSqArr[i].coordinates.xCor && coorY === playSqArr[i].coordinates.yCor) {
+            console.log(color)
+            console.log(playSqArr[i])
+            playSqArr[i].style.backgroundColor = color
+            return
+          }
+        }
+      }
   }
 }
 
@@ -75,9 +90,9 @@ gameDisplay.createPlayerSquares()
 gameDisplay.createComputerSquares()
 
 
-
 module.exports = {
-  display: display
+  gameDisplay: gameDisplay,
+  playSqArr: playSqArr
 }
 
 /*

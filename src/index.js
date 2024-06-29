@@ -4,8 +4,6 @@ const playerRequire = require("./player.js")
 const gameboard = gameboardRequire()
 
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
     let squares = document.querySelectorAll('.playersq')
     squares.forEach(function(square) {
@@ -16,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
             gameboard.placement(square.coordinates)
         })
     })
-})
+})  
 
 /*
 - reason square.coordinates is undefined is because square.addEventListener simply represents a single click of the "squares" variable
