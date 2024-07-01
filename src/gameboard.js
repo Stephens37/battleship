@@ -79,10 +79,14 @@ function gameboard () {
         s++
         }
         document.querySelector('footer').textContent = 'Let the games begin'
-
+        
       },
       placement: function (coordinates) {
         shipType = playShipArr[s]
+        if(playShipArr[s] === undefined) {
+          let stop = 'stop'
+          return stop
+        }
       if (coordinates.xCor + shipType.shipLength > 10) {
         throw new Error('Error: ship will not fit where you wish to place it.')
       } else {
@@ -100,11 +104,18 @@ function gameboard () {
           }
         }
         s++
-        console.log('hi')
+        console.log(s)
         if(s === 5) {
           this.computerPlacement()
-        }
+          let stop = 'stop'
+          return stop
+        } 
       },
+      /*
+      - issue is that I want to return the current shipType at the end of a loop however I don't want
+      to cut the loop short by adding a return statement at the end
+      - 
+      */
       receiveAttack: function (coordinates) {
       /*
       if the coordinates hit were the same coordinates as a ship
@@ -163,4 +174,4 @@ function gameboard () {
   }
 }
 
-module.exports = { gameboard, carrier }
+module.exports = { gameboard, playShipArr }

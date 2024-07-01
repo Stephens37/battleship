@@ -1,22 +1,26 @@
 require("./styles.css")
 const gameboardRequire = require("./gameboard.js")
 const playerRequire = require("./player.js")
-const gameboard = gameboardRequire()
+const gameboard = gameboardRequire.gameboard()
+const playShipArr = gameboardRequire.playShipArr
 
-document.addEventListener('DOMContentLoaded', function() {
-    let squares = document.querySelectorAll('.playersq')
-    squares.forEach(function(square) {
-        square.addEventListener('click', function () {
-            if(square.coordinates === undefined) {
-                console.log('bye')
-                }
-            gameboard.placement(square.coordinates)
-            if(gameboard.computerPlacement === true) {
-                gameboard.placement(square.coordinates)
-            }
+console.log(playShipArr)
+
+let squares = document.querySelectorAll('.playersq')
+function handleClick(event) {
+    let square = event.target
+    console.log(gameboard.shipType)
+    let result = gameboard.placement(square.coordinates)
+    if(result === 'stop'){
+        console.log('hey')
+        squares.forEach(function(square) {
+            square.removeEventListener('click', handleClick)
         })
-    })
-})  
+    }
+}
+squares.forEach(function(square) {
+    square.addEventListener('click', handleClick)
+})
 
 /*
 - reason square.coordinates is undefined is because square.addEventListener simply represents a single click of the "squares" variable
@@ -29,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
 */
 
 /*
-- have the event listener 
+- detect that shipType is carrier
+- detect that the playShipArr is equal to carrier
 */
 
