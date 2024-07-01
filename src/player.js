@@ -86,6 +86,7 @@ function display () {
           console.log(color)
           console.log(compSqArr[i])
           compSqArr[i].style.backgroundColor = color
+          console.log( { coorX, coorY } )
           return
         }
       }

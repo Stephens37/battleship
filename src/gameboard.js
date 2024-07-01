@@ -182,6 +182,8 @@ function gameboard () {
       that ship will be hit
       else the coordinates will be returned as missed
       */
+      console.log(coordinates.xCor)
+      console.log(coordinates.yCor)
       for (let i = 0; i < compMissed.length; i++) {
         if (JSON.stringify(coordinates) === JSON.stringify(compMissed[i])) {
           return 'Choose again'
@@ -200,21 +202,21 @@ function gameboard () {
               }
               usedSquares.push(coordinates)
               shipType.sunk = true
-              gameDisplay.compColorCoordinates(xCor, yCor, 'red')
-              this.computerChoice()
+              gameDisplay.compColorCoordinates(coordinates.xCor, coordinates.yCor, 'red')
+              //this.computerChoice()
               return shipType.sunk
             }
             usedSquares.push(coordinates)
-            gameDisplay.compColorCoordinates(xCor, yCor, 'red')
-            this.computerChoice()
+            gameDisplay.compColorCoordinates(coordinates.xCor, coordinates.yCor, 'red')
+            //this.computerChoice()
             return shipType.timesHit
           }
         }
       }
       usedSquares.push(coordinates)
       compMissed.push(coordinates)
-      gameDisplay.compColorCoordinates(xCor, yCor, 'grey')
-      this.computerChoice()
+      gameDisplay.compColorCoordinates(coordinates.xCor, coordinates.yCor, 'grey')
+      //this.computerChoice()
       return { compMissed }
     }
     /* squareChosen: function (xCor, yCor) {

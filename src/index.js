@@ -18,7 +18,9 @@ function handleClick(event) {
             square.removeEventListener('click', handleClick)
         })
         compSquares.forEach(function(square) {
-            square.addEventListener('click', gameboard.receivePlayAttack)
+            square.addEventListener('click', function() {
+                gameboard.receivePlayAttack(square.coordinates)
+            })
         })
     }
 }
