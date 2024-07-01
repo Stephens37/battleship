@@ -64,6 +64,7 @@ function display () {
         square.setAttribute('class', 'computersq')
         square.coordinates = compCorArr[i]
         console.log(square)
+        compSqArr.push(square)
         computerBoard.appendChild(square)
       }
       console.log('computer')

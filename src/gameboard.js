@@ -124,14 +124,15 @@ function gameboard () {
         that ship will be hit
         else the coordinates will be returned as missed
         */
-        for (let i = 0; i < compMissed.length; i++) {
-          if (JSON.stringify(coordinates) === JSON.stringify(missed[i])) {
+        for (let i = 0; i < playMissed.length; i++) {
+          if (JSON.stringify(coordinates) === JSON.stringify(playMissed[i])) {
             return 'Choose again'
           }
         }
         for(let i = 0; i < playShipArr.length; i++) {
           let shipType = playShipArr[i]
           let corArr = shipType.corArr
+          console.log(coordinates)
           let xCor = coordinates.xCor
           let yCor = coordinates.yCor
           for (let i = 0; i < corArr.length; i++) {
@@ -168,11 +169,11 @@ function gameboard () {
   
         let coordinates = { xCor, yCor }
         for (let i = 0; i < 1; i++) {
-          if (JSON.stringify({ xCor, yCor }) === JSON.stringify(missed[i])) {
+          if (JSON.stringify({ xCor, yCor }) === JSON.stringify(playMissed[i])) {
             randomChoice()
           }
         }
-        this.receiveAttack(coordinates)
+        this.receiveCompAttack(coordinates)
         return true
       },
       receivePlayAttack: function (coordinates) {
@@ -181,8 +182,8 @@ function gameboard () {
       that ship will be hit
       else the coordinates will be returned as missed
       */
-      for (let i = 0; i < missed.length; i++) {
-        if (JSON.stringify(coordinates) === JSON.stringify(missed[i])) {
+      for (let i = 0; i < compMissed.length; i++) {
+        if (JSON.stringify(coordinates) === JSON.stringify(compMissed[i])) {
           return 'Choose again'
         }
       }
@@ -199,12 +200,12 @@ function gameboard () {
               }
               usedSquares.push(coordinates)
               shipType.sunk = true
-              gameDisplay.playColorCoordinates(xCor, yCor, 'red')
+              gameDisplay.compColorCoordinates(xCor, yCor, 'red')
               this.computerChoice()
               return shipType.sunk
             }
             usedSquares.push(coordinates)
-            gameDisplay.playColorCoordinates(xCor, yCor, 'red')
+            gameDisplay.compColorCoordinates(xCor, yCor, 'red')
             this.computerChoice()
             return shipType.timesHit
           }
@@ -212,7 +213,7 @@ function gameboard () {
       }
       usedSquares.push(coordinates)
       compMissed.push(coordinates)
-      gameDisplay.playColorCoordinates(xCor, yCor, 'grey')
+      gameDisplay.compColorCoordinates(xCor, yCor, 'grey')
       this.computerChoice()
       return { compMissed }
     }
