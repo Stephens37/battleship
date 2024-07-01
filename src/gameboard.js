@@ -27,8 +27,6 @@ const { timesHit, shipLength, sunk } = require("./ship")
 // let yCor = player.yCor
 
 // const boardArr = Array.from({ length: 10 }, () => Array(10).fill(0))
-
-let sunkArr = []
 const gameOver = 'Game Over'
 
 let destroyer = { shipLength: 2, timesHit: 0, sunk: false }
@@ -40,7 +38,11 @@ let carrier = { shipLength: 5, timesHit: 0, sunk: false }
 let playShipArr = [destroyer, submarine, cruiser, battleship, carrier]
 let compShipArr = [destroyer, submarine, cruiser, battleship, carrier]
 
-let missed = []
+let compMissed = []
+let playMissed = []
+
+let compSunkArr = []
+let playSunkArr = []
 
 let xCor = player.xCor
 let yCor = player.yCor
@@ -100,7 +102,7 @@ function gameboard () {
             if (sqColor.xCor == playSqArr[i].coordinates.xCor) {
               playSqArr[i].style.color = 'green'
             }*/
-          gameDisplay.colorCoordinates(sqColor.xCor, sqColor.yCor, 'green')
+          gameDisplay.playColorCoordinates(sqColor.xCor, sqColor.yCor, 'green')
           }
         }
         s++
@@ -116,7 +118,64 @@ function gameboard () {
       to cut the loop short by adding a return statement at the end
       - 
       */
-      receiveAttack: function (coordinates) {
+      receiveCompAttack: function (coordinates) {
+        /*
+        if the coordinates hit were the same coordinates as a ship
+        that ship will be hit
+        else the coordinates will be returned as missed
+        */
+        for (let i = 0; i < compMissed.length; i++) {
+          if (JSON.stringify(coordinates) === JSON.stringify(missed[i])) {
+            return 'Choose again'
+          }
+        }
+        for(let i = 0; i < playShipArr.length; i++) {
+          let shipType = playShipArr[i]
+          let corArr = shipType.corArr
+          let xCor = coordinates.xCor
+          let yCor = coordinates.yCor
+          for (let i = 0; i < corArr.length; i++) {
+            if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates)) {
+              shipType.timesHit = shipType.timesHit + 1
+              if (shipType.timesHit === shipType.shipLength) {
+                playSunkArr.push(shipType)
+                if (playSunkArr.length === 5) {
+                  gameDisplay.playColorCoordinates(xCor, yCor, 'red')
+                  return gameOver
+                }
+                usedSquares.push(coordinates)
+                shipType.sunk = true
+                gameDisplay.playColorCoordinates(xCor, yCor, 'red')
+                return shipType.sunk
+              }
+              usedSquares.push(coordinates)
+              gameDisplay.playColorCoordinates(xCor, yCor, 'red')
+              return shipType.timesHit
+            }
+          }
+        }
+        usedSquares.push(coordinates)
+        playMissed.push(coordinates)
+        gameDisplay.playColorCoordinates(xCor, yCor, 'grey')
+        return { playMissed }
+      },
+      computerChoice: function () {
+        function randomChoice (choice) {
+          return Math.floor(Math.random * choice)
+        }
+        let xCor = randomChoice(11)
+        let yCor = randomChoice(11)
+  
+        let coordinates = { xCor, yCor }
+        for (let i = 0; i < 1; i++) {
+          if (JSON.stringify({ xCor, yCor }) === JSON.stringify(missed[i])) {
+            randomChoice()
+          }
+        }
+        this.receiveAttack(coordinates)
+        return true
+      },
+      receivePlayAttack: function (coordinates) {
       /*
       if the coordinates hit were the same coordinates as a ship
       that ship will be hit
@@ -127,26 +186,36 @@ function gameboard () {
           return 'Choose again'
         }
       }
-      for (let i = 0; i < corArr.length; i++) {
-        if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates)) {
-          shipType.timesHit = shipType.timesHit + 1
-          if (shipType.timesHit === shipType.shipLength) {
-            sunkArr.push(shipType)
-            if (sunkArr.length === 5) {
-              return gameOver
+      for(let i = 0; i < compShipArr.length; i++) {
+        let shipType = compShipArr[i]
+        let corArr = shipType.corArr
+        for (let i = 0; i < corArr.length; i++) {
+          if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates)) {
+            shipType.timesHit = shipType.timesHit + 1
+            if (shipType.timesHit === shipType.shipLength) {
+              compSunkArr.push(shipType)
+              if (compSunkArr.length === 5) {
+                return gameOver
+              }
+              usedSquares.push(coordinates)
+              shipType.sunk = true
+              gameDisplay.playColorCoordinates(xCor, yCor, 'red')
+              this.computerChoice()
+              return shipType.sunk
             }
             usedSquares.push(coordinates)
-            shipType.sunk = true
-            return shipType.sunk
+            gameDisplay.playColorCoordinates(xCor, yCor, 'red')
+            this.computerChoice()
+            return shipType.timesHit
           }
-          usedSquares.push(coordinates)
-          return shipType.timesHit
         }
       }
       usedSquares.push(coordinates)
-      missed.push(coordinates)
-      return { missed }
-    },
+      compMissed.push(coordinates)
+      gameDisplay.playColorCoordinates(xCor, yCor, 'grey')
+      this.computerChoice()
+      return { compMissed }
+    }
     /* squareChosen: function (xCor, yCor) {
       let coordinates = { xCor, yCor }
       for (let i = 0; i < missed.length; i++) {
@@ -156,21 +225,6 @@ function gameboard () {
       }
       return receiveAttack(coordinates)
     }, */
-    computerChoice: function () {
-      function randomChoice (choice) {
-        return Math.floor(Math.random * choice)
-      }
-      let xCor = randomChoice(11)
-      let yCor = randomChoice(11)
-
-      let coordinates = { xCor, yCor }
-      for (let i = 0; i < 1; i++) {
-        if (JSON.stringify({ xCor, yCor }) === JSON.stringify(missed[i])) {
-          randomChoice()
-        }
-      }
-      return true
-    }
   }
 }
 

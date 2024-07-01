@@ -7,6 +7,7 @@ const playShipArr = gameboardRequire.playShipArr
 console.log(playShipArr)
 
 let squares = document.querySelectorAll('.playersq')
+let compSquares = document.querySelectorAll('.computersq')
 function handleClick(event) {
     let square = event.target
     console.log(gameboard.shipType)
@@ -15,6 +16,9 @@ function handleClick(event) {
         console.log('hey')
         squares.forEach(function(square) {
             square.removeEventListener('click', handleClick)
+        })
+        compSquares.forEach(function(square) {
+            square.addEventListener('click', gameboard.receiveCompAttack())
         })
     }
 }

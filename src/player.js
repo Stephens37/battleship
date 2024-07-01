@@ -69,16 +69,27 @@ function display () {
       console.log('computer')
       return computerBoard
     },
-      colorCoordinates: function (coorX, coorY, color) {
-        for(let i = 0; i < 100; i++) {
-          if (coorX === playSqArr[i].coordinates.xCor && coorY === playSqArr[i].coordinates.yCor) {
-            console.log(color)
-            console.log(playSqArr[i])
-            playSqArr[i].style.backgroundColor = color
-            return
-          }
+      playColorCoordinates: function (coorX, coorY, color) {
+      for(let i = 0; i < 100; i++) {
+        if (coorX === playSqArr[i].coordinates.xCor && coorY === playSqArr[i].coordinates.yCor) {
+          console.log(color)
+          console.log(playSqArr[i])
+          playSqArr[i].style.backgroundColor = color
+          return
         }
       }
+    },
+      compColorCoordinates: function (coorX, coorY, color) {
+      for(let i = 0; i < 100; i++) {
+        if (coorX === compSqArr[i].coordinates.xCor && coorY === compSqArr[i].coordinates.yCor) {
+          console.log(color)
+          console.log(compSqArr[i])
+          compSqArr[i].style.backgroundColor = color
+          return
+        }
+      }
+    },
+    
   }
 }
 
