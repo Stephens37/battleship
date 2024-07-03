@@ -49,13 +49,9 @@ function display () {
         let square = document.createElement('div')
         square.setAttribute('class', 'playersq')
         square.coordinates = playCorArr[i]
-        console.log(square.coordinates)
-        console.log(playCorArr[i])
         playSqArr.push(square)
         playerBoard.appendChild(square)
-        console.log(square)
       }
-      console.log('player')
       return playerBoard
     },
       createComputerSquares: function () {
@@ -63,7 +59,6 @@ function display () {
         let square = document.createElement('div')
         square.setAttribute('class', 'computersq')
         square.coordinates = compCorArr[i]
-        console.log(square)
         compSqArr.push(square)
         computerBoard.appendChild(square)
       }
@@ -72,9 +67,14 @@ function display () {
     },
       playColorCoordinates: function (coorX, coorY, color) {
       for(let i = 0; i < 100; i++) {
+        console.log(coorX)
+        console.log(coorY)
+        console.log(playSqArr)
+        console.log(playSqArr[i].coordinates.xCor)
+        console.log(playSqArr[i].coordinates.yCor)
         if (coorX === playSqArr[i].coordinates.xCor && coorY === playSqArr[i].coordinates.yCor) {
-          console.log(color)
-          console.log(playSqArr[i])
+          console.log(coorX)
+          console.log(coorY)
           playSqArr[i].style.backgroundColor = color
           return
         }
@@ -198,4 +198,9 @@ function compSquares () {
 }
 
 compSquares()
+*/
+
+/*
+the reason why the computer coordinates are appearing wonky when displayed is because playSqArr has an 11 xCor before switching
+to the next yCor level
 */

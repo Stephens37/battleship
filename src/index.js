@@ -10,7 +10,6 @@ let squares = document.querySelectorAll('.playersq')
 let compSquares = document.querySelectorAll('.computersq')
 function handleClick(event) {
     let square = event.target
-    console.log(gameboard.shipType)
     let result = gameboard.placement(square.coordinates)
     if(result === 'stop'){
         console.log('hey')

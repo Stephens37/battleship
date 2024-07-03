@@ -44,6 +44,8 @@ let playMissed = []
 let compSunkArr = []
 let playSunkArr = []
 
+let compCorArr = []
+
 let xCor = player.xCor
 let yCor = player.yCor
 
@@ -72,9 +74,15 @@ function gameboard () {
         xCor = getRandomInt(11)
         yCor = getRandomInt(11)
       } else {
+        for(let i = 0; i < compCorArr.length; i++) {
+          if (JSON.stringify({xCor, yCor}) === JSON.stringify(compCorArr[i])) {
+            return this.computerPlacement()
+          }
+        }
           shipType.corArr = []
         for (let i = 0; i < shipType.shipLength; i++) {
           shipType.corArr.push({ xCor: xCor + i, yCor: yCor })
+          compCorArr.push({ xCor: xCor + i, yCor: yCor })
           }
         }
         console.log(shipType.corArr)
@@ -93,7 +101,6 @@ function gameboard () {
         throw new Error('Error: ship will not fit where you wish to place it.')
       } else {
         shipType.corArr = []
-        console.log(playSqArr)
         for (let i = 0; i < shipType.shipLength; i++) {
           shipType.corArr.push({ xCor: coordinates.xCor + i, yCor: coordinates.yCor })
           let sqColor = { xCor: coordinates.xCor + i, yCor: coordinates.yCor }
@@ -106,7 +113,6 @@ function gameboard () {
           }
         }
         s++
-        console.log(s)
         if(s === 5) {
           this.computerPlacement()
           let stop = 'stop'
@@ -124,16 +130,19 @@ function gameboard () {
         that ship will be hit
         else the coordinates will be returned as missed
         */
+       console.log(coordinates)
         for (let i = 0; i < playMissed.length; i++) {
           if (JSON.stringify(coordinates) === JSON.stringify(playMissed[i])) {
+            console.log('s')
             return 'Choose again'
           }
         }
         for(let i = 0; i < playShipArr.length; i++) {
           let shipType = playShipArr[i]
           let corArr = shipType.corArr
-          console.log(coordinates)
+          console.log(shipType.corArr)
           let xCor = coordinates.xCor
+          console.log(coordinates.xCor)
           let yCor = coordinates.yCor
           for (let i = 0; i < corArr.length; i++) {
             if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates)) {
@@ -142,6 +151,7 @@ function gameboard () {
                 playSunkArr.push(shipType)
                 if (playSunkArr.length === 5) {
                   gameDisplay.playColorCoordinates(xCor, yCor, 'red')
+                  document.querySelector('footer').textContent = 'Player Wins'
                   return gameOver
                 }
                 usedSquares.push(coordinates)
@@ -161,18 +171,29 @@ function gameboard () {
         return { playMissed }
       },
       computerChoice: function () {
+        console.log('f')
         function randomChoice (choice) {
-          return Math.floor(Math.random * choice)
+          return Math.floor(Math.random() * choice)
         }
         let xCor = randomChoice(11)
         let yCor = randomChoice(11)
-  
-        let coordinates = { xCor, yCor }
-        for (let i = 0; i < 1; i++) {
-          if (JSON.stringify({ xCor, yCor }) === JSON.stringify(playMissed[i])) {
-            randomChoice()
+        console.log(xCor)
+        console.log(yCor)
+        if (xCor + shipType.shipLength > 10 || xCor === 0 || yCor === 0) {
+          xCor = randomChoice(11)
+          yCor = randomChoice(11)
+        } else {
+          for (let i = 0; i < 1; i++) {
+            if (JSON.stringify({ xCor, yCor }) === JSON.stringify(playMissed[i])) {
+              xCor = randomChoice(11)
+              yCor = randomChoice(11)
+              console.log('hi')
+              coordinates = { xCor, yCor }
+              return coordinates
+            }
           }
         }
+        console.log(coordinates)
         this.receiveCompAttack(coordinates)
         return true
       },
@@ -198,17 +219,18 @@ function gameboard () {
             if (shipType.timesHit === shipType.shipLength) {
               compSunkArr.push(shipType)
               if (compSunkArr.length === 5) {
+                document.querySelector('footer').textContent = 'Player Wins'
                 return gameOver
               }
               usedSquares.push(coordinates)
               shipType.sunk = true
               gameDisplay.compColorCoordinates(coordinates.xCor, coordinates.yCor, 'red')
-              //this.computerChoice()
+              this.computerChoice()
               return shipType.sunk
             }
             usedSquares.push(coordinates)
             gameDisplay.compColorCoordinates(coordinates.xCor, coordinates.yCor, 'red')
-            //this.computerChoice()
+            this.computerChoice()
             return shipType.timesHit
           }
         }
@@ -216,7 +238,7 @@ function gameboard () {
       usedSquares.push(coordinates)
       compMissed.push(coordinates)
       gameDisplay.compColorCoordinates(coordinates.xCor, coordinates.yCor, 'grey')
-      //this.computerChoice()
+      this.computerChoice()
       return { compMissed }
     }
     /* squareChosen: function (xCor, yCor) {
@@ -232,3 +254,7 @@ function gameboard () {
 }
 
 module.exports = { gameboard, playShipArr }
+
+/*
+if 
+*/
