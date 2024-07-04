@@ -224,6 +224,7 @@ function gameboard () {
               }
               usedSquares.push(coordinates)
               shipType.sunk = true
+              console.log('h')
               gameDisplay.compColorCoordinates(coordinates.xCor, coordinates.yCor, 'red')
               this.computerChoice()
               return shipType.sunk

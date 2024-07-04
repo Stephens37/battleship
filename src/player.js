@@ -15,7 +15,7 @@ function display () {
     assignPCor: function () {
     let x = 0
     let y = 1
-    for (let i = 0; i < 101; i++) {
+    for (let i = 1; i < 101; i++) {
       if ((i - 1) % 10 === 0 && i !== 1) {
         x = 1
         y++
