@@ -4,8 +4,6 @@ const playerRequire = require("./player.js")
 const gameboard = gameboardRequire.gameboard()
 const playShipArr = gameboardRequire.playShipArr
 
-console.log(playShipArr)
-
 let squares = document.querySelectorAll('.playersq')
 let compSquares = document.querySelectorAll('.computersq')
 function handleClick(event) {

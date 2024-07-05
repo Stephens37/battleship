@@ -131,43 +131,33 @@ function gameboard () {
         else the coordinates will be returned as missed
         */
        console.log(coordinates)
-        for (let i = 0; i < playMissed.length; i++) {
-          if (JSON.stringify(coordinates) === JSON.stringify(playMissed[i])) {
-            console.log('s')
-            return 'Choose again'
-          }
-        }
         for(let i = 0; i < playShipArr.length; i++) {
           let shipType = playShipArr[i]
           let corArr = shipType.corArr
-          console.log(shipType.corArr)
-          let xCor = coordinates.xCor
-          console.log(coordinates.xCor)
-          let yCor = coordinates.yCor
           for (let i = 0; i < corArr.length; i++) {
             if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates)) {
               shipType.timesHit = shipType.timesHit + 1
               if (shipType.timesHit === shipType.shipLength) {
                 playSunkArr.push(shipType)
                 if (playSunkArr.length === 5) {
-                  gameDisplay.playColorCoordinates(xCor, yCor, 'red')
-                  document.querySelector('footer').textContent = 'Player Wins'
+                  gameDisplay.playColorCoordinates(coordinates.xCor, coordinates.yCor, 'red')
+                  document.querySelector('footer').textContent = 'Computer Wins'
                   return gameOver
                 }
                 usedSquares.push(coordinates)
                 shipType.sunk = true
-                gameDisplay.playColorCoordinates(xCor, yCor, 'red')
+                gameDisplay.playColorCoordinates(coordinates.xCor, coordinates.yCor, 'red')
                 return shipType.sunk
               }
               usedSquares.push(coordinates)
-              gameDisplay.playColorCoordinates(xCor, yCor, 'red')
+              gameDisplay.playColorCoordinates(coordinates.xCor, coordinates.yCor, 'red')
               return shipType.timesHit
             }
           }
         }
         usedSquares.push(coordinates)
         playMissed.push(coordinates)
-        gameDisplay.playColorCoordinates(xCor, yCor, 'grey')
+        gameDisplay.playColorCoordinates(coordinates.xCor, coordinates.yCor, 'grey')
         return { playMissed }
       },
       computerChoice: function () {
@@ -177,25 +167,23 @@ function gameboard () {
         }
         let xCor = randomChoice(11)
         let yCor = randomChoice(11)
+        let coordinates = {xCor, yCor}
         console.log(xCor)
         console.log(yCor)
-        if (xCor + shipType.shipLength > 10 || xCor === 0 || yCor === 0) {
-          xCor = randomChoice(11)
-          yCor = randomChoice(11)
-        } else {
-          for (let i = 0; i < 1; i++) {
-            if (JSON.stringify({ xCor, yCor }) === JSON.stringify(playMissed[i])) {
-              xCor = randomChoice(11)
-              yCor = randomChoice(11)
-              console.log('hi')
-              coordinates = { xCor, yCor }
-              return coordinates
-            }
+        for (let i = 0; i < 1; i++) {
+          if (JSON.stringify({ xCor, yCor }) === JSON.stringify(playMissed[i]) || xCor === 0 || yCor === 0 ) {
+            xCor = randomChoice(11)
+            yCor = randomChoice(11)
+            console.log(xCor)
+            console.log(yCor)
+            let coordinates = { xCor, yCor }
+            console.log(coordinates)
+            this.receiveCompAttack(coordinates)
+            return coordinates
           }
         }
         console.log(coordinates)
         this.receiveCompAttack(coordinates)
-        return true
       },
       receivePlayAttack: function (coordinates) {
       /*
@@ -257,5 +245,6 @@ function gameboard () {
 module.exports = { gameboard, playShipArr }
 
 /*
-if 
+computerchoice is now choosing 0 sometimes for its coordinate selection
+win text is triggering when last ship is hit, not sunk
 */

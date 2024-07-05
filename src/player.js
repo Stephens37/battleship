@@ -30,7 +30,7 @@ function display () {
       assignCCor: function () {
       let x = 0
       let y = 1
-      for (let i = 0; i < 101; i++) {
+      for (let i = 1; i < 101; i++) {
         if ((i - 1) % 10 === 0 && i !== 1) {
           x = 1
           y++
@@ -40,7 +40,6 @@ function display () {
         compCorArr.push({ xCor: x, yCor: y })
         }
       }
-      console.log(compSqArr)
       return compSqArr
     },
       createPlayerSquares: function () {
@@ -62,29 +61,25 @@ function display () {
         compSqArr.push(square)
         computerBoard.appendChild(square)
       }
-      console.log('computer')
       return computerBoard
     },
       playColorCoordinates: function (coorX, coorY, color) {
-      for(let i = 0; i < 100; i++) {
         console.log(coorX)
         console.log(coorY)
-        console.log(playSqArr)
-        console.log(playSqArr[i].coordinates.xCor)
-        console.log(playSqArr[i].coordinates.yCor)
+      for(let i = 0; i < 100; i++) {
         if (coorX === playSqArr[i].coordinates.xCor && coorY === playSqArr[i].coordinates.yCor) {
-          console.log(coorX)
-          console.log(coorY)
+          console.log(playSqArr[i].coordinates.xCor)
+          console.log(playSqArr[i].coordinates.xCor)
+          console.log('colour')
+          console.log(color)
           playSqArr[i].style.backgroundColor = color
-          return
+          console.log(playSqArr[i].style.backgroundColor)
         }
       }
     },
       compColorCoordinates: function (coorX, coorY, color) {
       for(let i = 0; i < 100; i++) {
         if (coorX === compSqArr[i].coordinates.xCor && coorY === compSqArr[i].coordinates.yCor) {
-          console.log(color)
-          console.log(compSqArr[i])
           compSqArr[i].style.backgroundColor = color
           console.log( { coorX, coorY } )
           return
