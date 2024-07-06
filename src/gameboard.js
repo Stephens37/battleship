@@ -131,6 +131,7 @@ function gameboard () {
         else the coordinates will be returned as missed
         */
        console.log(coordinates)
+       console.log(playMissed)
         for(let i = 0; i < playShipArr.length; i++) {
           let shipType = playShipArr[i]
           let corArr = shipType.corArr
@@ -165,25 +166,21 @@ function gameboard () {
         function randomChoice (choice) {
           return Math.floor(Math.random() * choice)
         }
-        let xCor = randomChoice(11)
-        let yCor = randomChoice(11)
-        let coordinates = {xCor, yCor}
-        console.log(xCor)
-        console.log(yCor)
-        for (let i = 0; i < 1; i++) {
-          if (JSON.stringify({ xCor, yCor }) === JSON.stringify(playMissed[i]) || xCor === 0 || yCor === 0 ) {
-            xCor = randomChoice(11)
-            yCor = randomChoice(11)
-            console.log(xCor)
-            console.log(yCor)
-            let coordinates = { xCor, yCor }
-            console.log(coordinates)
-            this.receiveCompAttack(coordinates)
-            return coordinates
+        function checkCompCor () {
+          let xCor = randomChoice(11)
+          let yCor = randomChoice(11)
+          console.log(xCor)
+          console.log(yCor)
+          for(let i = 0; i < playMissed.length; i++) {
+            if (JSON.stringify({ xCor, yCor }) === JSON.stringify(playMissed[i]) || xCor === 0 || yCor === 0 ) {
+              return checkCompCor()
+            }
           }
+          let coordinates = {xCor, yCor}
+          return {coordinates}
         }
-        console.log(coordinates)
-        this.receiveCompAttack(coordinates)
+        let coordinates = checkCompCor()
+        this.receiveCompAttack(coordinates.coordinates)
       },
       receivePlayAttack: function (coordinates) {
       /*
