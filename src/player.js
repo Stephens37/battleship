@@ -2,42 +2,46 @@ let playCorArr = []
 let compCorArr = []
 let playSqArr = []
 let compSqArr = []
-let xCor
-let yCor
+let playXCor
+let playYCor
+let compXCor
+let compYCor
 
 const playerBoard = document.querySelector('#playerboard')
 const computerBoard = document.querySelector('#computerboard')
 
 function display () {
   return {
-    xCor: xCor,
-    yCor: yCor,
-    assignPCor: function () {
+    playXCor: playXCor,
+    playYCor: playYCor,
+    compXCor: compXCor,
+    compYCor: compYCor,
+    assignPlayPCor: function () {
     let x = 0
     let y = 1
     for (let i = 1; i < 101; i++) {
       if ((i - 1) % 10 === 0 && i !== 1) {
         x = 1
         y++
-        playCorArr.push({ xCor: x, yCor: y })
+        playCorArr.push({ playXCor: x, playYCor: y })
       } else {
         x++
-        playCorArr.push({ xCor: x, yCor: y })
+        playCorArr.push({ playXCor: x, playYCor: y })
       }
     }
     return playSqArr
     },
-      assignCCor: function () {
+      assignCompCCor: function () {
       let x = 0
       let y = 1
       for (let i = 1; i < 101; i++) {
         if ((i - 1) % 10 === 0 && i !== 1) {
           x = 1
           y++
-          compCorArr.push({ xCor: x, yCor: y })
+          compCorArr.push({ compXCor: x, compYCor: y })
         } else {
         x++
-        compCorArr.push({ xCor: x, yCor: y })
+        compCorArr.push({ compXCor: x, compYCor: y })
         }
       }
       return compSqArr
@@ -67,10 +71,8 @@ function display () {
         console.log(coorX)
         console.log(coorY)
       for(let i = 0; i < 100; i++) {
-        if (coorX === playSqArr[i].coordinates.xCor && coorY === playSqArr[i].coordinates.yCor) {
-          console.log(playSqArr[i].coordinates.xCor)
-          console.log(playSqArr[i].coordinates.xCor)
-          console.log('colour')
+        if (coorX === playSqArr[i].coordinates.playXCor && coorY === playSqArr[i].coordinates.playYCor) {
+          console.log(playSqArr[i].coordinates.playXCor)
           console.log(color)
           playSqArr[i].style.backgroundColor = color
           console.log(playSqArr[i].style.backgroundColor)
@@ -79,7 +81,7 @@ function display () {
     },
       compColorCoordinates: function (coorX, coorY, color) {
       for(let i = 0; i < 100; i++) {
-        if (coorX === compSqArr[i].coordinates.xCor && coorY === compSqArr[i].coordinates.yCor) {
+        if (coorX === compSqArr[i].coordinates.compXCor && coorY === compSqArr[i].coordinates.compYCor) {
           compSqArr[i].style.backgroundColor = color
           console.log( { coorX, coorY } )
           return

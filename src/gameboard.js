@@ -41,13 +41,18 @@ let compShipArr = [destroyer, submarine, cruiser, battleship, carrier]
 let compMissed = []
 let playMissed = []
 
+let compSqUsed = []
+let playSqUsed = []
+
 let compSunkArr = []
 let playSunkArr = []
 
 let compCorArr = []
 
-let xCor = player.xCor
-let yCor = player.yCor
+let playXCor = player.playXCor
+let playYCor = player.playYCor
+let compXCor = player.compXCor
+let compYCor = player.compYCor
 
 
 function gameboard () {
@@ -55,22 +60,24 @@ function gameboard () {
   let usedSquares = []
   let t = 0
   let s = 0
-  let shipType
+  let playShipType
+  let compShipType
   return {
-    shipType: shipType,
+    playShipType: playShipType,
+    compShipType: compShipType,
     coordinates: coordinates,
     xCor: xCor,
     yCor: yCor,
     usedSquares: usedSquares,
     computerPlacement: function () {
       for(let i = 0; i < 5; i++) {
-      shipType = compShipArr[i]
+      compShipType = compShipArr[i]
       function getRandomInt(max) {
         return Math.floor(Math.random() * max);
       }
       xCor = getRandomInt(11)
       yCor = getRandomInt(11)
-      if (xCor + shipType.shipLength > 10 || xCor === 0 || yCor === 0) {
+      if (xCor + compShipType.shipLength > 10 || xCor === 0 || yCor === 0) {
         xCor = getRandomInt(11)
         yCor = getRandomInt(11)
       } else {
@@ -79,30 +86,30 @@ function gameboard () {
             return this.computerPlacement()
           }
         }
-          shipType.corArr = []
-        for (let i = 0; i < shipType.shipLength; i++) {
-          shipType.corArr.push({ xCor: xCor + i, yCor: yCor })
+          compShipType.corArr = []
+        for (let i = 0; i < compShipType.shipLength; i++) {
+          compShipType.corArr.push({ xCor: xCor + i, yCor: yCor })
           compCorArr.push({ xCor: xCor + i, yCor: yCor })
           }
         }
-        console.log(shipType.corArr)
+        console.log(compShipType.corArr)
         s++
         }
         document.querySelector('footer').textContent = 'Let the games begin'
         
       },
       placement: function (coordinates) {
-        shipType = playShipArr[s]
+        playShipType = playShipArr[s]
         if(playShipArr[s] === undefined) {
           let stop = 'stop'
           return stop
         }
-      if (coordinates.xCor + shipType.shipLength > 10) {
+      if (coordinates.xCor + playShipType.shipLength > 10) {
         throw new Error('Error: ship will not fit where you wish to place it.')
       } else {
-        shipType.corArr = []
-        for (let i = 0; i < shipType.shipLength; i++) {
-          shipType.corArr.push({ xCor: coordinates.xCor + i, yCor: coordinates.yCor })
+        playShipType.corArr = []
+        for (let i = 0; i < playShipType.shipLength; i++) {
+          playShipType.corArr.push({ xCor: coordinates.xCor + i, yCor: coordinates.yCor })
           let sqColor = { xCor: coordinates.xCor + i, yCor: coordinates.yCor }
           //SET COLOR ON COORDINATES BY MATCHING THEM WITH THE DIV THAT HAS THE SAME COORDINATES
           /*for (let i = 0; i < 100; i++) {
@@ -111,6 +118,7 @@ function gameboard () {
             }*/
           gameDisplay.playColorCoordinates(sqColor.xCor, sqColor.yCor, 'green')
           }
+          console.log(playShipArr[s].corArr)
         }
         s++
         if(s === 5) {
@@ -133,33 +141,38 @@ function gameboard () {
        console.log(coordinates)
        console.log(playMissed)
         for(let i = 0; i < playShipArr.length; i++) {
-          let shipType = playShipArr[i]
-          let corArr = shipType.corArr
+          let playShipType = playShipArr[i]
+          let corArr = playShipType.corArr
+          console.log(playShipType.corArr)
           for (let i = 0; i < corArr.length; i++) {
             if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates)) {
-              shipType.timesHit = shipType.timesHit + 1
-              if (shipType.timesHit === shipType.shipLength) {
-                playSunkArr.push(shipType)
+              playShipType.timesHit = playShipType.timesHit + 1
+              console.log(playShipType.shipLength)
+              console.log(playShipType.corArr)
+              console.log('hello')
+              if (playShipType.timesHit === playShipType.shipLength) {
+                playSunkArr.push(playShipType)
                 if (playSunkArr.length === 5) {
                   gameDisplay.playColorCoordinates(coordinates.xCor, coordinates.yCor, 'red')
                   document.querySelector('footer').textContent = 'Computer Wins'
                   return gameOver
                 }
-                usedSquares.push(coordinates)
-                shipType.sunk = true
+                playSqUsed.push(coordinates)
+                playShipType.sunk = true
+                document.querySelector('header').innerText = `Player's ${playShipType} sunk!`
                 gameDisplay.playColorCoordinates(coordinates.xCor, coordinates.yCor, 'red')
-                return shipType.sunk
+                return compShipType.sunk
               }
-              usedSquares.push(coordinates)
+              playSqUsed.push(coordinates)
               gameDisplay.playColorCoordinates(coordinates.xCor, coordinates.yCor, 'red')
-              return shipType.timesHit
+              return compShipType.timesHit
             }
           }
         }
-        usedSquares.push(coordinates)
+        playSqUsed.push(coordinates)
         playMissed.push(coordinates)
         gameDisplay.playColorCoordinates(coordinates.xCor, coordinates.yCor, 'grey')
-        return { playMissed }
+        return { playMissed, playSqUsed }
       },
       computerChoice: function () {
         console.log('f')
@@ -171,8 +184,9 @@ function gameboard () {
           let yCor = randomChoice(11)
           console.log(xCor)
           console.log(yCor)
-          for(let i = 0; i < playMissed.length; i++) {
-            if (JSON.stringify({ xCor, yCor }) === JSON.stringify(playMissed[i]) || xCor === 0 || yCor === 0 ) {
+          for(let i = 0; i < playSqUsed.length; i++) {
+            if (JSON.stringify({ xCor, yCor }) === JSON.stringify(playSqUsed[i]) || xCor === 0 || yCor === 0 ) {
+              console.log('f')
               return checkCompCor()
             }
           }
@@ -190,38 +204,43 @@ function gameboard () {
       */
       console.log(coordinates.xCor)
       console.log(coordinates.yCor)
-      for (let i = 0; i < compMissed.length; i++) {
-        if (JSON.stringify(coordinates) === JSON.stringify(compMissed[i])) {
-          return 'Choose again'
+      for (let i = 0; i < compSqUsed.length; i++) {
+        if (JSON.stringify(coordinates) === JSON.stringify(compSqUsed[i])) {
+          console.log('d')
+          document.querySelector('footer').style.innerText = 'Choose Again'
+          return
         }
       }
       for(let i = 0; i < compShipArr.length; i++) {
-        let shipType = compShipArr[i]
-        let corArr = shipType.corArr
+        let compShipType = compShipArr[i]
+        let corArr = compShipType.corArr
         for (let i = 0; i < corArr.length; i++) {
           if (JSON.stringify(corArr[i]) === JSON.stringify(coordinates)) {
-            shipType.timesHit = shipType.timesHit + 1
-            if (shipType.timesHit === shipType.shipLength) {
-              compSunkArr.push(shipType)
+            compShipType.timesHit = compShipType.timesHit + 1
+            if (compShipType.timesHit === compShipType.shipLength) {
+              console.log(compShipType)
+              console.log(compShipType.timesHit)
+              compSunkArr.push(compShipType)
               if (compSunkArr.length === 5) {
-                document.querySelector('footer').textContent = 'Player Wins'
+                document.querySelector('footer').innerText = 'Player Wins'
                 return gameOver
               }
-              usedSquares.push(coordinates)
-              shipType.sunk = true
+              compSqUsed.push(coordinates)
+              compShipType.sunk = true
+              document.querySelector('header').innerText = `Computer's ${compShipType} sunk!`
               console.log('h')
               gameDisplay.compColorCoordinates(coordinates.xCor, coordinates.yCor, 'red')
               this.computerChoice()
-              return shipType.sunk
+              return compShipType.sunk
             }
-            usedSquares.push(coordinates)
+            compSqUsed.push(coordinates)
             gameDisplay.compColorCoordinates(coordinates.xCor, coordinates.yCor, 'red')
             this.computerChoice()
-            return shipType.timesHit
+            return compShipType.timesHit
           }
         }
       }
-      usedSquares.push(coordinates)
+      compSqUsed.push(coordinates)
       compMissed.push(coordinates)
       gameDisplay.compColorCoordinates(coordinates.xCor, coordinates.yCor, 'grey')
       this.computerChoice()
