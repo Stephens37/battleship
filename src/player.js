@@ -16,7 +16,7 @@ function display () {
     playYCor: playYCor,
     compXCor: compXCor,
     compYCor: compYCor,
-    assignPlayPCor: function () {
+    assignPCor: function () {
     let x = 0
     let y = 1
     for (let i = 1; i < 101; i++) {
@@ -31,7 +31,7 @@ function display () {
     }
     return playSqArr
     },
-      assignCompCCor: function () {
+      assignCCor: function () {
       let x = 0
       let y = 1
       for (let i = 1; i < 101; i++) {
@@ -51,7 +51,7 @@ function display () {
       for(let i = 0; i < 100; i++) {
         let square = document.createElement('div')
         square.setAttribute('class', 'playersq')
-        square.coordinates = playCorArr[i]
+        square.playCoor = playCorArr[i]
         playSqArr.push(square)
         playerBoard.appendChild(square)
       }
@@ -61,7 +61,7 @@ function display () {
       for(let i = 0; i < 100; i++) {
         let square = document.createElement('div')
         square.setAttribute('class', 'computersq')
-        square.coordinates = compCorArr[i]
+        square.compCoor = compCorArr[i]
         compSqArr.push(square)
         computerBoard.appendChild(square)
       }
@@ -71,8 +71,8 @@ function display () {
         console.log(coorX)
         console.log(coorY)
       for(let i = 0; i < 100; i++) {
-        if (coorX === playSqArr[i].coordinates.playXCor && coorY === playSqArr[i].coordinates.playYCor) {
-          console.log(playSqArr[i].coordinates.playXCor)
+        if (coorX === playSqArr[i].playCoor.playXCor && coorY === playSqArr[i].playCoor.playYCor) {
+          console.log(playSqArr[i].playCoor.playXCor)
           console.log(color)
           playSqArr[i].style.backgroundColor = color
           console.log(playSqArr[i].style.backgroundColor)
@@ -81,7 +81,7 @@ function display () {
     },
       compColorCoordinates: function (coorX, coorY, color) {
       for(let i = 0; i < 100; i++) {
-        if (coorX === compSqArr[i].coordinates.compXCor && coorY === compSqArr[i].coordinates.compYCor) {
+        if (coorX === compSqArr[i].compCoor.compXCor && coorY === compSqArr[i].compCoor.compYCor) {
           compSqArr[i].style.backgroundColor = color
           console.log( { coorX, coorY } )
           return
@@ -102,7 +102,8 @@ gameDisplay.createComputerSquares()
 
 module.exports = {
   gameDisplay: gameDisplay,
-  playSqArr: playSqArr
+  compCorArr: compCorArr,
+  playCorArr: playCorArr,
 }
 
 /*

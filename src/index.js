@@ -6,23 +6,28 @@ const playShipArr = gameboardRequire.playShipArr
 
 let squares = document.querySelectorAll('.playersq')
 let compSquares = document.querySelectorAll('.computersq')
-function handleClick(event) {
+function handleShipPlacement(event) {
     let square = event.target
-    let result = gameboard.placement(square.coordinates)
+    let result = gameboard.placement(square.playCoor)
     if(result === 'stop'){
         console.log('hey')
         squares.forEach(function(square) {
-            square.removeEventListener('click', handleClick)
-        })
-        compSquares.forEach(function(square) {
-            square.addEventListener('click', function() {
-                gameboard.receivePlayAttack(square.coordinates)
-            })
+            square.removeEventListener('click', handleShipPlacement)
         })
     }
 }
+
 squares.forEach(function(square) {
-    square.addEventListener('click', handleClick)
+    square.addEventListener('click', handleShipPlacement)
+})
+
+function handlePlayClick(event) {
+    let compSquare = event.target
+    gameboard.receivePlayAttack(compSquare.compCoor)
+}
+
+compSquares.forEach(function(compSquare) {
+    compSquare.addEventListener('click', handlePlayClick)
 })
 
 /*
