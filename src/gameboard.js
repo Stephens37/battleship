@@ -50,6 +50,9 @@ let playMissed = []
 let compSqUsed = []
 let playSqUsed = []
 
+let compCorUsed = []
+let playCorUsed = []
+
 let compSunkArr = []
 let playSunkArr = []
 
@@ -78,28 +81,40 @@ function gameboard () {
     playYCor: playYCor,
     usedSquares: usedSquares,
     computerPlacement: function () {
+      let s = 0
       for(let i = 0; i < 5; i++) {
       compShipType = compShipArr[i]
+      compShipType.cShipCorArr = []
       function getRandomInt(max) {
         return Math.floor(Math.random() * max);
       }
       compXCor = getRandomInt(11)
       compYCor = getRandomInt(11)
-      if (compXCor + compShipType.shipLength > 10 || compXCor === 0 || compYCor === 0) {
+      console.log(compXCor)
+      console.log(compYCor)
+      /*if (compXCor + compShipType.shipLength > 10 || compXCor === 0 || compYCor === 0) {
         compXCor = getRandomInt(11)
         compYCor = getRandomInt(11)
       } else {
-        for(let i = 0; i < compCorArr.length; i++) {
-          if (JSON.stringify({compXCor, compYCor}) === JSON.stringify(compCorArr[i])) {
-            console.log('w')
-            return this.computerPlacement()
+        for(let i = 0; i < compCorUsed.length; i++) {
+          if (JSON.stringify({compXCor, compYCor}) === JSON.stringify(compCorUsed[i])) {
+            this.computerPlacement()
           }
-        }
-        console.log('f')
-          compShipType.cShipCorArr = []
+        }*/
         for (let i = 0; i < compShipType.shipLength; i++) {
           compShipType.cShipCorArr.push({ compXCor: compXCor + i, compYCor: compYCor })
+          compCorUsed.push({ compXCor: compXCor + i, compYCor: compYCor })
+          }
           console.log(compShipType.cShipCorArr)
+        
+        s++
+        console.log(s)
+        if(compShipType.cShipCorArr === undefined) {
+          return this.computerPlacement()
+        }
+        if(s === 5) {
+          for (let i = 0; i < 5; i++) {
+            console.log(compShipArr[i]. cShipCorArr)
           }
         }
         }
