@@ -1,5 +1,6 @@
-function ship (shipLength, timesHit, sunk) {
+function ship (shipName, shipLength, timesHit, sunk) {
   return {
+    shipName: shipName,
     shipLength: shipLength,
     timesHit: timesHit,
     sunk: sunk,

@@ -29,17 +29,17 @@ const { timesHit, shipLength, sunk } = require("./ship")
 // const boardArr = Array.from({ length: 10 }, () => Array(10).fill(0))
 const gameOver = 'Game Over'
 
-let compDestroyer = { shipLength: 2, timesHit: 0, sunk: false }
-let compSubmarine = { shipLength: 3, timesHit: 0, sunk: false }
-let compCruiser = { shipLength: 3, timesHit: 0, sunk: false }
-let compBattleship = { shipLength: 4, timesHit: 0, sunk: false }
-let compCarrier = { shipLength: 5, timesHit: 0, sunk: false }
+let compDestroyer = { shipName: 'Destroyer', shipLength: 2, timesHit: 0, sunk: false }
+let compSubmarine = { shipName: 'Submarine', shipLength: 3, timesHit: 0, sunk: false }
+let compCruiser = { shipName: 'Cruiser', shipLength: 3, timesHit: 0, sunk: false }
+let compBattleship = { shipName: 'Battleship', shipLength: 4, timesHit: 0, sunk: false }
+let compCarrier = {shipName: 'Carrier', shipLength: 5, timesHit: 0, sunk: false }
 
-let playDestroyer = { shipLength: 2, timesHit: 0, sunk: false }
-let playSubmarine = { shipLength: 3, timesHit: 0, sunk: false }
-let playCruiser = { shipLength: 3, timesHit: 0, sunk: false }
-let playBattleship = { shipLength: 4, timesHit: 0, sunk: false }
-let playCarrier = { shipLength: 5, timesHit: 0, sunk: false }
+let playDestroyer = { shipName: 'Destroyer', shipLength: 2, timesHit: 0, sunk: false }
+let playSubmarine = { shipName: 'Submarine', shipLength: 3, timesHit: 0, sunk: false }
+let playCruiser = { shipName: 'Cruiser', shipLength: 3, timesHit: 0, sunk: false }
+let playBattleship = { shipName: 'Battleship', shipLength: 4, timesHit: 0, sunk: false }
+let playCarrier = { shipName: 'Carrier', shipLength: 5, timesHit: 0, sunk: false }
 
 let compShipArr = [compDestroyer, compSubmarine, compCruiser, compBattleship, compCarrier]
 let playShipArr = [playDestroyer, playSubmarine, playCruiser, playBattleship, playCarrier]
@@ -82,25 +82,45 @@ function gameboard () {
     usedSquares: usedSquares,
     computerPlacement: function () {
       let s = 0
+      let compYArr = []
       for(let i = 0; i < 5; i++) {
       compShipType = compShipArr[i]
       compShipType.cShipCorArr = []
-      function getRandomInt(max) {
-        return Math.floor(Math.random() * max);
+      function getRandomInt(min, max) {
+        min = Math.ceil(min)
+        max = Math.floor(max)
+
+        return Math.floor(Math.random() * (max-min)) + min;
       }
-      compXCor = getRandomInt(11)
-      compYCor = getRandomInt(11)
-      console.log(compXCor)
-      console.log(compYCor)
-      /*if (compXCor + compShipType.shipLength > 10 || compXCor === 0 || compYCor === 0) {
-        compXCor = getRandomInt(11)
-        compYCor = getRandomInt(11)
-      } else {
+      function randomCor () {
+        function callRandom() {
+          compXCor = getRandomInt(1, 11 - compShipType.shipLength)
+          compYCor = getRandomInt(1, 11 - compShipType.shipLength)
+          console.log('ee')
+          return { compXCor, compYCor}
+        }
+        let { compXCor, compYCor } = callRandom()
+        function checkRepeat() {
+          if(compYArr.length > 0) {
+          for(let i = 0; i < compYArr.length; i++) {
+            if (compYArr[i] === compYCor) {
+              return callRandom()
+            }
+            //compYArr is still having its first value be overwritten each loop causing a recursion error
+          }
+        }
+      } checkRepeat()
+        compYArr.push(compYCor)
+        console.log(compYArr)
+        return { compXCor, compYCor }
+      }
+      let { compXCor, compYCor } = randomCor()
+      console.log(compXCor, compYCor )
         for(let i = 0; i < compCorUsed.length; i++) {
           if (JSON.stringify({compXCor, compYCor}) === JSON.stringify(compCorUsed[i])) {
-            this.computerPlacement()
+            return this.computerPlacement()
           }
-        }*/
+        }
         for (let i = 0; i < compShipType.shipLength; i++) {
           compShipType.cShipCorArr.push({ compXCor: compXCor + i, compYCor: compYCor })
           compCorUsed.push({ compXCor: compXCor + i, compYCor: compYCor })
@@ -185,7 +205,7 @@ function gameboard () {
                 }
                 playSqUsed.push(playCoor)
                 playShipType.sunk = true
-                document.querySelector('footer').innerText = `Player's ${JSON.stringify(playShipType)} sunk!`
+                document.querySelector('footer').innerText = `Player's ${playShipType.shipName} sunk!`
                 gameDisplay.playColorCoordinates(playCoor.playXCor, playCoor.playYCor, 'red')
                 return compShipType.sunk
               }
@@ -254,7 +274,7 @@ function gameboard () {
               }
               compSqUsed.push(compCoor)
               compShipType.sunk = true
-              document.querySelector('footer').innerText = `Computer's ${JSON.stringify(compShipType)} sunk!`
+              document.querySelector('footer').innerText = `Computer's ${compShipType.shipName} sunk!`
               console.log('h')
               gameDisplay.compColorCoordinates(compCoor.compXCor, compCoor.compYCor, 'red')
               this.computerChoice()
