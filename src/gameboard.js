@@ -92,28 +92,22 @@ function gameboard () {
 
         return Math.floor(Math.random() * (max-min)) + min;
       }
-      function randomCor () {
-        function callRandom() {
-          compXCor = getRandomInt(1, 11 - compShipType.shipLength)
-          compYCor = getRandomInt(1, 11 - compShipType.shipLength)
-          console.log('ee')
-          return { compXCor, compYCor}
-        }
-        let { compXCor, compYCor } = callRandom()
-        function checkRepeat() {
-          if(compYArr.length > 0) {
-          for(let i = 0; i < compYArr.length; i++) {
-            if (compYArr[i] === compYCor) {
-              return callRandom()
+      function randomCor() {
+        let compXCor, compYCor
+        let unique = false
+    
+        while (!unique) {
+            compXCor = getRandomInt(1, 11 - compShipType.shipLength)
+            compYCor = getRandomInt(1, 11 - compShipType.shipLength)
+    
+            unique = !compYArr.includes(compYCor)
+    
+            if (unique) {
+                compYArr.push(compYCor)
             }
-            //compYArr is still having its first value be overwritten each loop causing a recursion error
-          }
         }
-      } checkRepeat()
-        compYArr.push(compYCor)
-        console.log(compYArr)
         return { compXCor, compYCor }
-      }
+    }
       let { compXCor, compYCor } = randomCor()
       console.log(compXCor, compYCor )
         for(let i = 0; i < compCorUsed.length; i++) {
