@@ -18,6 +18,10 @@ body {
 header {
   grid-row: 1;
   grid-column: 1 / spread 2;
+  border-bottom: 20px;
+  border-radius: 0px 0px 20px 20px;
+  border-color: navy;
+  background-color: darkblue;
 }
 
 #title {
@@ -27,19 +31,7 @@ header {
   font-size: 50px;
   font-family: "Bakbak One", sans-serif;;
   text-align: center;
-}
-
-#player {
-  grid-row: 2;
-  grid-column: 1;
-}
-
-#playergrid {
-  display: grid;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
+  color: rgb(211, 211, 211);
 }
 
 #computer {
@@ -53,9 +45,28 @@ header {
   height: 100%;
   justify-content: center;
   align-items: center;
+  align-content: center;
+  grid-template-rows: 2fr 8fr;
 }
 
-#playerboard {
+#computertitle {
+  grid-row: 1;
+}
+
+#computertitletext {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-family: "Bakbak One", sans-serif;;
+  color: red;
+}
+
+#computerboardplacement {
+  grid-row: 2;
+}
+
+#computerboard {
   display: grid;
   width: 500px;
   height: 500px;
@@ -66,7 +77,53 @@ header {
   border-style: solid;
 }
 
-#computerboard {
+.computersq {
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
+}
+
+#player {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+#playergrid {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  grid-template-rows: 20% 80%;
+}
+
+@media (max-height: 850px) {
+  #playergrid {
+    grid-template-rows: 15% 85%;
+  }
+  #computergrid {
+    grid-template-rows: 15% 85%;
+  }
+}
+
+#playertitle {
+  grid-row: 1;
+}
+
+#playertitletext {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-family: "Bakbak One", sans-serif;;
+  color: green;
+}
+
+#playerboardplacement {
+  grid-row: 2;
+}
+
+#playerboard {
   display: grid;
   width: 500px;
   height: 500px;
@@ -83,15 +140,23 @@ header {
   border-style: solid;
 }
 
-.computersq {
-  border-width: 2px;
-  border-color: black;
-  border-style: solid;
-}
-
 footer { 
   grid-row: 3;
   grid-column: 1 / span 2;
   text-align: center;
-  font-size: 20px;
+  font-size: 30px;
+  border-bottom: 20px;
+  border-radius: 20px 20px 0px 0px;
+  border-color: navy;
+  background-color: darkblue;
+}
+
+#footertext {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-family: "Bakbak One", sans-serif;;
+  text-align: center;
+  color: rgb(211, 211, 211);
 }

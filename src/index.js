@@ -2,20 +2,30 @@ require("./styles.css")
 const gameboardRequire = require("./gameboard.js")
 const playerRequire = require("./player.js")
 const gameboard = gameboardRequire.gameboard()
-const playShipArr = gameboardRequire.playShipArr
 
-let squares = document.querySelectorAll('.playersq')
 let compSquares = document.querySelectorAll('.computersq')
+let squares = document.querySelectorAll('.playersq')
+let compSquareArr = []
+let playSquareArr = []
+
+compSquares.forEach(function (compSquare) {
+    compSquareArr.push(compSquare)
+})
+
+squares.forEach(function (square) {
+    playSquareArr.push(square)
+})
+
 function handleShipPlacement(event) {
     let square = event.target
     let result = gameboard.placement(square.playCoor)
     if(result === 'stop'){
-        console.log('hey')
         squares.forEach(function(square) {
             square.removeEventListener('click', handleShipPlacement)
         })
     }
 }
+
 
 squares.forEach(function(square) {
     square.addEventListener('click', handleShipPlacement)
@@ -26,22 +36,48 @@ function handlePlayClick(event) {
     gameboard.receivePlayAttack(compSquare.compCoor)
 }
 
-compSquares.forEach(function(compSquare) {
-    compSquare.addEventListener('click', handlePlayClick)
+const promiseA = new Promise(async (resolve, reject) => {
+    try {
+        let allGreenSquaresProcessed = false
+        while(!allGreenSquaresProcessed) {
+            allGreenSquaresProcessed = true
+            for(let i = 0; i < playSquareArr.length; i++) {
+            if (playSquareArr[i].style.backgroundColor === 'green') {
+                playSquareArr[i].removeEventListener('click', handleShipPlacement)
+            } else {
+                allGreenSquaresProcessed = false
+            }
+            }
+            if(allGreenSquaresProcessed) {
+                resolve(true)
+            }
+            else {
+                await new Promise(r => setTimeout(r, 100))
+            }
+        }
+    }
+    catch(err) {
+        reject(err)
+    }
+}).catch((err) => {
+    console.error(err)
 })
 
-/*
-- reason square.coordinates is undefined is because square.addEventListener simply represents a single click of the "squares" variable
-- the "squares" variable encapsulates the whole "playersq" class
-- meaning that there is no specific set of coordinates cooresponding to the "squares" variable
-*/
-
-/*
-- is there a way to detect the attributes of an object simply based on it's click?
-*/
-
-/*
-- detect that shipType is carrier
-- detect that the playShipArr is equal to carrier
-*/
-
+compSquares.forEach(function(compSquare) {
+    compSquare.addEventListener('click', handlePlayClick)
+    
+    const promiseA = new Promise((resolve, reject) => {
+        const checkCondition = () => {
+            if (document.querySelector('#footertext').innerText === 'Player Wins' || 
+                document.querySelector('#footertext').innerText === 'Computer Wins') {
+                compSquare.removeEventListener('click', handlePlayClick)
+                resolve(true)
+            } else {
+                setTimeout(checkCondition, 100)
+            }
+        }
+        checkCondition()
+    }).catch((err) => {
+        console.error(err)
+    })
+})
