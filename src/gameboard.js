@@ -1,21 +1,20 @@
-const { gameDisplay, compCorArr, playCorArr } = require('./player.js')
-const { timesHit, shipLength, sunk } = require("./ship")
+const { gameDisplay, playCorArr } = require('./player.js')
+const ship = require('./ship.js')
 
-const gameOver = 'Game Over'
+let compDestroyer = ship('Destroyer', 2, 0, false)
+let compSubmarine = ship('Submarine', 3, 0, false)
+let compCruiser = ship('Cruiser', 3, 0, false)
+let compBattleship = ship('Battleship', 4, 0, false)
+let compCarrier = ship('Carrier', 5, 0, false)
 
-let compDestroyer = { shipName: 'Destroyer', shipLength: 2, timesHit: 0, sunk: false }
-let compSubmarine = { shipName: 'Submarine', shipLength: 3, timesHit: 0, sunk: false }
-let compCruiser = { shipName: 'Cruiser', shipLength: 3, timesHit: 0, sunk: false }
-let compBattleship = { shipName: 'Battleship', shipLength: 4, timesHit: 0, sunk: false }
-let compCarrier = {shipName: 'Carrier', shipLength: 5, timesHit: 0, sunk: false }
-
-let playDestroyer = { shipName: 'Destroyer', shipLength: 2, timesHit: 0, sunk: false }
-let playSubmarine = { shipName: 'Submarine', shipLength: 3, timesHit: 0, sunk: false }
-let playCruiser = { shipName: 'Cruiser', shipLength: 3, timesHit: 0, sunk: false }
-let playBattleship = { shipName: 'Battleship', shipLength: 4, timesHit: 0, sunk: false }
-let playCarrier = { shipName: 'Carrier', shipLength: 5, timesHit: 0, sunk: false }
+let playDestroyer = ship('Destroyer', 2, 0, false)
+let playSubmarine = ship('Submarine', 3, 0, false)
+let playCruiser = ship('Cruiser', 3, 0, false)
+let playBattleship = ship('Battleship', 4, 0, false)
+let playCarrier = ship('Carrier', 5, 0, false)
 
 let compShipArr = [compDestroyer, compSubmarine, compCruiser, compBattleship, compCarrier]
+console.log(compShipArr)
 let playShipArr = [playDestroyer, playSubmarine, playCruiser, playBattleship, playCarrier]
 
 let compMissed = []
@@ -123,23 +122,23 @@ function gameboard () {
           let pShipCorArr = playShipType.pShipCorArr
           for (let i = 0; i < pShipCorArr.length; i++) {
             if (JSON.stringify(pShipCorArr[i]) === JSON.stringify(playCoor)) {
-              playShipType.timesHit = playShipType.timesHit + 1
-              if (playShipType.timesHit === playShipType.shipLength) {
+              playShipType.timesHit = playShipType.hit()
+              if (playShipType.isSunk() === true) {
                 playSunkArr.push(playShipType)
+                console.log('f')
                 if (playSunkArr.length === 5) {
                   document.querySelector('#footertext').innerText = 'Computer Wins'
                   document.querySelector('#footertext').style.color = 'red'
                   return gameDisplay.playColorCoordinates(playCoor.playXCor, playCoor.playYCor, 'red')
                 }
                 playSqUsed.push(playCoor)
-                playShipType.sunk = true
                 document.querySelector('#footertext').innerText = `Player's ${playShipType.shipName} sunk!`
                 gameDisplay.playColorCoordinates(playCoor.playXCor, playCoor.playYCor, 'red')
-                return compShipType.sunk
+                return
               }
               playSqUsed.push(playCoor)
               gameDisplay.playColorCoordinates(playCoor.playXCor, playCoor.playYCor, 'red')
-              return compShipType.timesHit
+              return playShipType.timesHit
             }
           }
         }
@@ -178,8 +177,9 @@ function gameboard () {
         let cShipCorArr = compShipType.cShipCorArr
         for (let i = 0; i < cShipCorArr.length; i++) {
           if (JSON.stringify(cShipCorArr[i]) === JSON.stringify(compCoor)) {
-            compShipType.timesHit = compShipType.timesHit + 1
-            if (compShipType.timesHit === compShipType.shipLength) {
+            compShipType.timesHit = compShipType.hit()
+            if (compShipType.isSunk() === true) {
+              console.log('s')
               compSunkArr.push(compShipType)
               if (compSunkArr.length === 5) {
                 document.querySelector('#footertext').innerText = 'Player Wins'
@@ -187,11 +187,9 @@ function gameboard () {
                 return gameDisplay.compColorCoordinates(compCoor.compXCor, compCoor.compYCor, 'red')
               }
               compSqUsed.push(compCoor)
-              compShipType.sunk = true
               document.querySelector('#footertext').innerText = `Computer's ${compShipType.shipName} sunk!`
               gameDisplay.compColorCoordinates(compCoor.compXCor, compCoor.compYCor, 'red')
-              this.computerChoice()
-              return compShipType.sunk
+              return this.computerChoice()
             }
             compSqUsed.push(compCoor)
             gameDisplay.compColorCoordinates(compCoor.compXCor, compCoor.compYCor, 'red')

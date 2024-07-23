@@ -6,20 +6,18 @@ function ship (shipName, shipLength, timesHit, sunk) {
     sunk: sunk,
     corArr: [],
     hit: function () {
-      timesHit += 1
-      return timesHit
+      this.timesHit++
+      console.log(this.timesHit)
+      return this.timesHit
     },
     isSunk: function () {
-      if (shipLength === timesHit) {
-        sunk = true
-        return sunk
+      if (this.shipLength === this.timesHit) {
+        this.sunk = true
+        console.log(this.sunk)
+        return this.sunk
       }
     }
   }
 }
 
-module.exports = ship(5, 4, false)
-
-/*
-
-*/
+module.exports = ship
