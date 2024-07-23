@@ -93,22 +93,25 @@ function gameboard () {
             return this.computerPlacement()
           }
         }
-        document.querySelector('#footertext').innerText = 'Fight!'
       },
       placement: function (playCoor) {
         playShipType = playShipArr[s]
+        if(s <= 4 && playShipArr[(s + 1)] !== undefined) {
+          document.querySelector('#footertext').textContent = `Place your ${playShipArr[s + 1].shipName}`
+        }
         let shipLength = playShipType.shipLength
         for(let i = 0; i < shipLength; i++) {
           let playXCor = playCoor.playXCor + i
           let playYCor = playCoor.playYCor
           for(let i = 0; i < playSqArr.length; i++) {
             if(JSON.stringify({ playXCor, playYCor }) === JSON.stringify(playSqArr[i].playCoor) && playSqArr[i].style.backgroundColor === 'green') {
-              console.log('e')
+              document.querySelector('#footertext').textContent = 'Another ship is in the way'
               throw new Error('Error: another ship is occupying your desired coordinates')
             }
           }
         }
-        if (playCoor.playXCor + playShipType.shipLength > 10) {
+        if (playCoor.playXCor + playShipType.shipLength > 11) {
+          document.querySelector('#footertext').textContent = 'This ship is too long to be placed there'
           throw new Error('Error: ship will not fit where you wish to place it.')
         } else {
         playShipType.pShipCorArr = []
@@ -121,6 +124,7 @@ function gameboard () {
         }
         s++
         if(s === 5) {
+          document.querySelector('#footertext').innerText = 'Fight!'
           this.computerPlacement()
           let stop = 'stop'
           return stop
@@ -141,7 +145,7 @@ function gameboard () {
                   return gameDisplay.playColorCoordinates(playCoor.playXCor, playCoor.playYCor, 'red')
                 }
                 playSqUsed.push(playCoor)
-                document.querySelector('#footertext').innerText = `Player's ${playShipType.shipName} sunk!`
+                document.querySelector('#footertext').innerText = `Player's ${playShipType.shipName} has sunk!`
                 gameDisplay.playColorCoordinates(playCoor.playXCor, playCoor.playYCor, 'red')
                 return
               }
@@ -188,15 +192,14 @@ function gameboard () {
           if (JSON.stringify(cShipCorArr[i]) === JSON.stringify(compCoor)) {
             compShipType.timesHit = compShipType.hit()
             if (compShipType.isSunk() === true) {
-              console.log('s')
               compSunkArr.push(compShipType)
               if (compSunkArr.length === 5) {
                 document.querySelector('#footertext').innerText = 'Player Wins'
-                document.querySelector('#footertext').style.color = 'green'
+                document.querySelector('#footertext').style.color = 'yellowgreen'
                 return gameDisplay.compColorCoordinates(compCoor.compXCor, compCoor.compYCor, 'red')
               }
               compSqUsed.push(compCoor)
-              document.querySelector('#footertext').innerText = `Computer's ${compShipType.shipName} sunk!`
+              document.querySelector('#footertext').innerText = `Computer's ${compShipType.shipName} has sunk!`
               gameDisplay.compColorCoordinates(compCoor.compXCor, compCoor.compYCor, 'red')
               return this.computerChoice()
             }
