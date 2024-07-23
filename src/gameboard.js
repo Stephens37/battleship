@@ -1,4 +1,4 @@
-const { gameDisplay, playCorArr } = require('./player.js')
+const { gameDisplay, playCorArr, playSqArr } = require('./player.js')
 const ship = require('./ship.js')
 
 let compDestroyer = ship('Destroyer', 2, 0, false)
@@ -14,7 +14,6 @@ let playBattleship = ship('Battleship', 4, 0, false)
 let playCarrier = ship('Carrier', 5, 0, false)
 
 let compShipArr = [compDestroyer, compSubmarine, compCruiser, compBattleship, compCarrier]
-console.log(compShipArr)
 let playShipArr = [playDestroyer, playSubmarine, playCruiser, playBattleship, playCarrier]
 
 let compMissed = []
@@ -98,9 +97,20 @@ function gameboard () {
       },
       placement: function (playCoor) {
         playShipType = playShipArr[s]
-      if (playCorArr.playXCor + playShipType.shipLength > 10) {
-        throw new Error('Error: ship will not fit where you wish to place it.')
-      } else {
+        let shipLength = playShipType.shipLength
+        for(let i = 0; i < shipLength; i++) {
+          let playXCor = playCoor.playXCor + i
+          let playYCor = playCoor.playYCor
+          for(let i = 0; i < playSqArr.length; i++) {
+            if(JSON.stringify({ playXCor, playYCor }) === JSON.stringify(playSqArr[i].playCoor) && playSqArr[i].style.backgroundColor === 'green') {
+              console.log('e')
+              throw new Error('Error: another ship is occupying your desired coordinates')
+            }
+          }
+        }
+        if (playCoor.playXCor + playShipType.shipLength > 10) {
+          throw new Error('Error: ship will not fit where you wish to place it.')
+        } else {
         playShipType.pShipCorArr = []
         for (let i = 0; i < playShipType.shipLength; i++) {
           playShipType.pShipCorArr.push({ playXCor: playCoor.playXCor + i, playYCor: playCoor.playYCor })
@@ -125,7 +135,6 @@ function gameboard () {
               playShipType.timesHit = playShipType.hit()
               if (playShipType.isSunk() === true) {
                 playSunkArr.push(playShipType)
-                console.log('f')
                 if (playSunkArr.length === 5) {
                   document.querySelector('#footertext').innerText = 'Computer Wins'
                   document.querySelector('#footertext').style.color = 'red'

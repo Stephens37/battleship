@@ -96,4 +96,5 @@ gameDisplay.createComputerSquares()
 module.exports = {
   gameDisplay: gameDisplay,
   playCorArr: playCorArr,
+  playSqArr: playSqArr,
 }
