@@ -58,7 +58,7 @@ header {
   justify-content: center;
   align-items: center;
   font-size: 40px;
-  font-family: "Bakbak One", sans-serif;;
+  font-family: "Bakbak One", sans-serif;
   color: red;
 }
 
@@ -78,9 +78,11 @@ header {
 }
 
 .computersq {
+  height: 46px;
   border-width: 2px;
   border-color: black;
   border-style: solid;
+  overflow: hidden;
 }
 
 #player {
@@ -116,7 +118,7 @@ header {
   align-items: center;
   font-size: 40px;
   font-family: "Bakbak One", sans-serif;;
-  color: yellowgreen;
+  color: green;
 }
 
 #playerboardplacement {
@@ -135,9 +137,12 @@ header {
 }
 
 .playersq {
+  height: 46px;
   border-width: 2px;
   border-color: black;
   border-style: solid;
+  overflow: hidden;
+  border-collapse: separate;
 }
 
 footer { 
@@ -149,6 +154,7 @@ footer {
   border-radius: 20px 20px 0px 0px;
   border-color: navy;
   background-color: darkblue;
+  border: 5px solid black;
 }
 
 #footertext {
